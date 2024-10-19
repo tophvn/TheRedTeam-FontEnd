@@ -1,0 +1,335 @@
+:root {
+	--gz-orange-color: #ffffff;
+	--gz-yellow-color: #fffffff;
+	--gz-white-color: #000000;
+	--gz-black-color: #ffffff;
+	--gz-text-color: #ffffff;
+	--gz-black-color1: #ffffff;
+}
+
+/* new-button */
+.gz-all-btn {
+	width: 100%;
+	max-width: 172px;
+	display: inline-flex;
+	align-items: center;
+	margin-top: 10px;
+	margin-right: 20px; /* Tạo khoảng cách giữa hai nút */
+	justify-content: center;
+	height: 50px;
+	text-decoration: none;
+	font-size: 16px;
+	letter-spacing: 2px;
+	color: #fff;
+	cursor: pointer;
+	text-align: center;
+	text-transform: capitalize;
+	border-radius: 0px;
+	position: relative;
+	overflow: hidden!important;
+	background-color: var(--gz-orange-color);
+	transition: all 0.3s;
+}
+.gz-all-btn:hover {
+	border: 1px solid transparent;
+	color: var(--gz-orange-color)!important;
+	background-color: var(--gz-white-color);
+}
+.gz-all-btn2 {
+	width: 100%;
+	max-width: 172px;
+	display: inline-flex;
+	align-items: center;
+	margin-top: -150px;
+	margin-left: 150px;
+	justify-content: center;
+	height: 30px;
+	text-decoration: none;
+	font-size: 16px;
+	letter-spacing: 2px;
+	color: #fff;
+	cursor: pointer;
+	text-align: center;
+	text-transform: capitalize;
+	border-radius: 0px;
+	position: relative;
+	overflow: hidden!important;
+	background-color: var(--gz-orange-color);
+	transition: all 0.3s;
+}
+.gz-all-btn2:hover {
+	border: 1px solid transparent;
+	color: var(--gz-orange-color)!important;
+	background-color: var(--gz-white-color);
+}
+/* banner slider btn */
+a.gz-all-btn.gz-btn-color.gz-banner-btn {
+	max-width: 140px;
+	height: 48px;
+	font-size: 16px;
+}
+a.gz-all-btn2.gz-btn-color2.gz-banner-btn2 {
+	max-width: 140px;
+	height: 48px;
+	font-size: 16px;
+}
+
+.parent-container {
+	display: flex;
+	align-items: center; /* căn chỉnh các nút theo chiều dọc */
+	justify-content: space-between; /* hoặc sử dụng giá trị khác như center, space-around, ... */
+	position: relative; /* Đảm bảo rằng các nút con có cùng bối cảnh vị trí */
+}
+
+.gz-all-btn,
+.gz-all-btn2 {
+	margin-top: 10px; /* Đặt lại margin-top để tránh xung đột */
+	margin-left: 0; /* Đặt lại margin-left để tránh xung đột */
+}
+
+/* Đặt lại thuộc tính margin-top và margin-left không cần thiết */
+.gz-all-btn2 {
+	margin-top: 10px;
+	margin-left: 0;
+}
+/* banner slider css */
+.gz-banner-main {
+	background-color: var(--background-black1);
+	position: relative;
+	bottom: -50px;
+}
+.gz-banner-slider-wrapper .swiper {
+	padding: 100px 0px;
+	position: relative;
+	top: -260px;
+}
+.gz-banner-slider-inner {
+	position: relative;
+	height: 330px;
+	background-color: #44464670;
+	border-radius: 10px;
+	margin-top: 40px;
+	opacity: 0.5;
+}
+.swiper-slide.swiper-slide-active .gz-banner-slider-inner {
+	opacity: 1;
+}
+.gz-banner-slide-img {
+	position: absolute;
+	top: -25px;
+	left: 25px;
+}
+.gz-banner-slide-img img {
+	border-radius: 10px;
+}
+.gz-banner-slide-content {
+	padding: 30px 20px 30px 300px;
+}
+.gz-banner-slide-content h3 {
+	font-size: 26px;
+	color: var(--gz-text-color);
+	padding-bottom: 7px;
+}
+.gz-banner-slide-content span svg:nth-child(1) {
+	fill: var(--gz-yellow-color);
+}
+.gz-banner-slide-content span svg:nth-child(2) {
+	fill: var(--gz-yellow-color);
+}
+.gz-banner-slide-content span svg:nth-child(3) {
+	fill: var(--gz-yellow-color);
+}
+.gz-banner-slide-content span svg:nth-child(4) {
+	fill: #64686b;
+}
+.gz-banner-slide-content span svg:nth-child(5) {
+	fill: #64686b;
+}
+.gz-banner-slide-content p {
+	font-size: 14px;
+	color: var(--gz-text-color);
+	padding-top: 7px;
+}
+
+/* Responsive adjustments for mobile devices */
+@media (max-width: 576px) {
+	.gz-all-btn {
+		width: 100%;
+		max-width: 100%;
+		height: 45px;
+		font-size: 14px;
+	}
+	.gz-all-btn2 {
+		max-width: 172px;
+		height: 50px;
+		font-size: 16px;
+	}
+	
+	.gz-banner-slider-wrapper .swiper {
+		padding: 50px 0px;
+		top: -130px;
+	}
+
+	.gz-banner-slider-inner {
+		height: auto;
+		margin-top: 20px;
+		padding: 20px 10px;
+	}
+
+	.gz-banner-slide-img {
+		position: relative;
+		top: 0;
+		left: 0;
+		margin-bottom: 20px;
+	}
+	
+	.gz-banner-slide-content {
+		padding: 10px 10px;
+		text-align: center;
+	}
+
+	.gz-banner-slide-content h3 {
+		font-size: 20px;
+	}
+	
+	.gz-banner-slide-content p {
+		font-size: 12px;
+	}
+}
+
+/* Responsive adjustments for tablets */
+@media (min-width: 577px) and (max-width: 768px) {
+	.gz-all-btn {
+		width: 100%;
+		max-width: 100%;
+		height: 48px;
+		font-size: 15px;
+	}
+	.gz-all-btn2 {
+		max-width: 172px;
+		height: 50px;
+		font-size: 16px;
+	}
+	
+	.gz-banner-slider-wrapper .swiper {
+		padding: 75px 0px;
+		top: -150px;
+	}
+
+	.gz-banner-slider-inner {
+		height: auto;
+		margin-top: 30px;
+		padding: 25px 15px;
+	}
+
+	.gz-banner-slide-img {
+		position: relative;
+		top: 0;
+		left: 0;
+		margin-bottom: 25px;
+	}
+	
+	.gz-banner-slide-content {
+		padding: 15px 15px;
+		text-align: center;
+	}
+
+	.gz-banner-slide-content h3 {
+		font-size: 22px;
+	}
+	
+	.gz-banner-slide-content p {
+		font-size: 13px;
+	}
+}
+
+/* Responsive adjustments for small desktops */
+@media (min-width: 769px) and (max-width: 1024px) {
+	.gz-all-btn {
+		width: 100%;
+		max-width: 150px;
+		height: 50px;
+		font-size: 16px;
+	}
+	.gz-all-btn2 {
+		max-width: 172px;
+		height: 50px;
+		font-size: 16px;
+	}
+	
+	.gz-banner-slider-wrapper .swiper {
+		padding: 90px 0px;
+		top: -180px;
+	}
+
+	.gz-banner-slider-inner {
+		height: auto;
+		margin-top: 35px;
+		padding: 30px 20px;
+	}
+
+	.gz-banner-slide-img {
+		position: relative;
+		top: 0;
+		left: 0;
+		margin-bottom: 30px;
+	}
+	
+	.gz-banner-slide-content {
+		padding: 20px 20px;
+		text-align: center;
+	}
+
+	.gz-banner-slide-content h3 {
+		font-size: 24px;
+	}
+	
+	.gz-banner-slide-content p {
+		font-size: 14px;
+	}
+}
+
+/* General adjustments for all desktops */
+@media (min-width: 1025px) {
+	.gz-all-btn {
+		max-width: 172px;
+		height: 50px;
+		font-size: 16px;
+	}
+	.gz-all-btn2 {
+		max-width: 172px;
+		height: 50px;
+		font-size: 16px;
+	}
+	
+	.gz-banner-slider-wrapper .swiper {
+		padding: 100px 0px;
+		top: -260px;
+	}
+
+	.gz-banner-slider-inner {
+		height: 330px;
+		margin-top: 40px;
+		padding: 30px 20px;
+	}
+
+	.gz-banner-slide-img {
+		position: absolute;
+		top: -25px;
+		left: 25px;
+		margin-bottom: 0;
+	}
+	
+	.gz-banner-slide-content {
+		padding: 30px 20px 30px 300px;
+		text-align: left;
+	}
+
+	.gz-banner-slide-content h3 {
+		font-size: 26px;
+	}
+	
+	.gz-banner-slide-content p {
+		font-size: 14px;
+	}
+}

@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Stylesheets -->
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<link href="css/responsive.css" rel="stylesheet">
+<link rel="shortcut icon" href="images/faviconRed.png" type="image/x-icon">
+<link rel="icon" href="images/faviconRed.png" type="image/x-icon">
+<!-- Responsive --> 
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<style>
+.platform-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgb(255, 0, 0);
+    color: #fff;
+    padding: 2px 10px;
+    margin-left: 14px;
+    margin-top: 14px;
+    border-radius: 20px;
+    transform-origin: bottom left;
+    
+    white-space: nowrap;
+}
+    .letter {
+        cursor: pointer;
+	    font-size: 20px;
+	    color: #f00104;
+	    font-weight: 400;
+	    letter-spacing:31px;
+	    text-transform: uppercase;
+    }
+    .title2{
+	position: relative;
+	display: block;
+	font-size: 20px;
+	color: #ffffff;
+	font-weight: 400;
+	margin-bottom: 10px;
+	letter-spacing:1px;
+	text-transform: uppercase;
+}
+
+.title4{
+	position: relative;
+	display: block;
+	font-size: 20px;
+	color: #d30103;
+	font-weight: 400;
+	margin-bottom: 10px;
+	margin-top: 5px;
+	letter-spacing:1px;
+	text-transform: uppercase;
+}
+
+    .names-container {
+        display: none;
+        column-count: 3; 
+        column-gap: 20px; 
+    }
+    .names {
+        display: inline-block;
+        width: 100%;
+    }
+    .name-link {
+        display: block;
+        margin-bottom: 10px;
+    }
+    .letter.selected {
+    background-color: none; 
+    color: #ffffff; 
+}
+</style>
+<style>
+  /* Thiết lập kiểu cho thanh cuộn */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  /* Màu nền cho thanh cuộn */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+  /* Màu cho phần 'cần kẹp' của thanh cuộn */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  /* Màu khi di chuột qua thanh cuộn */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    width: 80%;
+    margin: 20px auto;
+  }
+  .scrollable {
+    height: 300px;
+    overflow-y: auto; /* Sử dụng "auto" để thanh cuộn chỉ xuất hiện khi cần */
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  #searchForm {
+    position: relative; /* Đặt vị trí tương đối */
+    display: inline-block; /* Hiển thị inline block để có thể căn giữa */
+    width: 200px; /* Đặt chiều rộng của thanh tìm kiếm */
+}
+
+#searchInput {
+    padding-right: 30px; /* Để lại khoảng trống phía bên phải cho biểu tượng và icon search */
+    width: 100%; /* Để input trải dài ra theo phần tử cha */
+}
+
+#searchButton {
+    position: absolute; /* Đặt vị trí tuyệt đối để có thể căn giữa */
+    right: 5px; /* Đặt khoảng cách từ phía bên phải */
+    top: 50%; /* Đặt vị trí dọc ở giữa */
+    transform: translateY(-50%); /* Dịch chuyển lên trên 50% để căn giữa dọc */
+}
+
+/* Dành cho thiết bị di động với chiều rộng màn hình tối đa là 768px */
+@media only screen and (max-width: 599px) {
+    /* Bỏ mọi thuộc tính ẩn và chắc chắn rằng form tìm kiếm hiển thị */
+.header-top .top-left {
+    display: flex !important; /* Bắt buộc hiện thị */
+   justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc nếu cần */
+    visibility: visible !important; /* Đảm bảo không bị ẩn */
+    opacity: 1 !important; /* Đảm bảo không bị trong suốt */
+    width: 100%; /* Đặt chiều rộng cho thanh tìm kiếm */
+}
+
+/* Đặt social-icons sang bên phải */
+    .header-top .top-right {
+        display:none;
+    }
+
+}
+
+</style>
+<head>
+<meta charset="utf-8">
+<!-- Stylesheets -->
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<link href="css/responsive.css" rel="stylesheet">
+<link rel="shortcut icon" href="images/faviconRed.png" type="image/x-icon">
+<link rel="icon" href="images/faviconRed.png" type="image/x-icon">
+<!-- Responsive -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+</head>
+
+<style>
+    .box{
+    position: relative;
+    }
+    
+    .input {
+        padding: 10px;
+        width: 30px;
+        height: 30px;
+        background: none;
+        border: 2px solid #FFFFFF;
+        border-radius: 50px;
+        box-sizing: border-box;
+        font-family: Segoe UI;
+        font-size: 15px;
+        color: #FFFFFF;
+        outline: none;
+        transition: .5s;
+    }
+    .box:hover input{
+        width: 250px;
+        background: #3b3640;
+        border-radius: 5px;
+    }
+    .box i{
+        position: absolute;
+        top: 50%;
+        right: 0px;
+        transform: translate(-50%,-50%);
+        font-size: 15px;
+        color: #FFFFFF;
+        transition: .2s;
+    }
+    .box:hover i{
+        opacity: 0;
+        z-index: -1;
+    }
+    
+</style>
+
+<body>
+<div class="page-wrapper">
+    <!-- Preloader -->
+    <!-- Main Header -->
+    <header class="main-header">
+        <!-- Header Top -->
+<div class="header-top">
+    <div class="auto-container clearfix">
+        <div class="top-left">
+            <ul class="info-list">
+                <li>
+                    <div class="box">
+                        <form id="searchForm">
+                            <input type="text" class="input" id="searchInput" placeholder="Nhập tên game...">
+                            <button type="submit" id="searchButton"><i class="fas fa-search"></i></button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <script>
+            document.getElementById("searchForm").addEventListener("submit", function(event) {
+                event.preventDefault(); // Prevent default form submission
+                var keyword = document.getElementById("searchInput").value.trim(); // Get the search keyword
+                if (keyword !== "") {
+                    window.location.href = "https://theredteam.vn/tim-kiem?search=" + encodeURIComponent(keyword); // Redirect to search URL
+                }
+            });
+        </script>
+                <div class="top-right">
+                    <ul class="social-icons">
+                        <li><a href="#"><span class="fab fa-facebook-square"></span></a></li>
+                        <li><a href="#"><span class="fab fa-discord"></span></a></li>
+			            <li><a href="#"><span class="fab fa-youtube"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Header Upper -->
+        <div class="header-upper">
+            <div class="inner-container">
+                <div class="auto-container clearfix">
+                    <div class="preloader"><div class="icon"></div></div>
+                    <!--Logo-->
+                    <div class="logo-outer">
+                        <div class="logo"><a href="#"><img src="images/logoRedHome.png" width="120px" alt="" title="The Red Team"></a></div>
+                    </div>
+                    <!--Nav Box-->
+                    <div class="nav-outer clearfix">
+                        <!--Mobile Navigation Toggler-->
+                        <div class="mobile-nav-toggler"><span class="icon flaticon-menu-1"></span></div>
+                        <!-- Main Menu -->
+                        <nav class="main-menu navbar-expand-md navbar-light">
+                            <div class="collapse navbar-collapse show clearfix" id="navbarSupportedContent">
+                                <ul class="navigation clearfix pull-left">
+                                    <li class="current dropdown"><a href="#">Trang Chủ</a></li>
+                                    <li class="dropdown"><a href="#">Thư Viện Việt Hóa</a></li>
+                                   
+                                    <li class="dropdown"><a href="#">Donate Team</a></li>
+                                </ul>
+                                <ul class="navigation pull-right clearfix">
+                                     <li class="dropdown"><a href="#">Diễn Đàn Việt Hóa</a></li>
+                                    <li class="dropdown"><a href="#">Fanpage TRT</a></li>
+                                    <li><a href="#">Discord TRT</a></li>
+                                </ul>
+                            </div>
+                        </nav>
+                        <!-- Main Menu End-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Header Upper-->
+        <!-- Sticky Header  -->
+        <div class="sticky-header">
+            <div class="auto-container clearfix">
+                <!--Logo-->
+                <div class="logo pull-left">
+                    <a href="#" title=""><img src="images/logoRed.png" alt="" title=""></a>
+                </div>
+                <!--Right Col-->
+                <div class="pull-right">
+                    <!-- Main Menu -->
+                    <nav class="main-menu clearfix">
+					
+                        <!--Keep This Empty / Menu will come through Javascript-->
+                    </nav><!-- Main Menu End-->
+                </div>
+            </div>
+        </div><!-- End Sticky Menu -->
+        <!-- Mobile Menu  -->
+        <div class="mobile-menu">
+            <div class="menu-backdrop"></div>
+            <div class="close-btn"><span class="icon flaticon-close"></span></div>
+            <nav class="menu-box">
+                <div class="nav-logo"><a href="#"><img src="images/logoRed.png" alt="" title=""></a></div>
+                <div class="menu-outer"><!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header--></div>
+				
+				<!--Social Links-->
+				<div class="social-links">
+					<ul class="social-icons">
+                        <li><a href="#"><span class="fab fa-facebook-square"></span></a></li>
+                        <li><a href="#"><span class="fab fa-discord"></span></a></li>
+			            <li><a href="#"><span class="fab fa-youtube"></span></a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div><!-- End Mobile Menu -->
+    </header>
+    <head>
+        <title>The Red Team - Việt Hóa Game</title>
+    </head>
+    <!-- Banner Section -->
+    <section class="banner-section">
+        <div class="banner-carousel owl-theme owl-carousel">
+		
+		<div class="slide-item" width="17801px">
+            	<div class="image-layer" style="background-image:url(images/New_2023/tbi_slide.png"></div>
+                <div class="auto-container">
+                    <div class="content-box">
+                        <h2 style="opacity: 0"> The <br> Red Team </h2>
+                        <div class="btn-box"><a href="#" class="theme-btn btn-style-one"><span class="btn-title">Xem Thêm</span></a></div>
+                    </div>  
+                </div>
+            </div>
+		
+		<div class="slide-item" width="17801px">
+            	<div class="image-layer" style="background-image:url(images/New_2023/dd2_slide.png"></div>
+                <div class="auto-container">
+                    <div class="content-box">
+                        <h2 style="opacity: 0"> The <br> Red Team </h2>
+                        <div class="btn-box"><a href="#" class="theme-btn btn-style-one"><span class="btn-title">Xem Thêm</span></a></div>
+                    </div>  
+                </div>
+            </div>
+		
+		<div class="slide-item" width="17801px">
+            	<div class="image-layer" style="background-image:url(images/New_2023/tm_slide.png"></div>
+                <div class="auto-container">
+                    <div class="content-box">
+                        <h2 style="opacity: 0"> The <br> Red Team </h2>
+                        <div class="btn-box"><a href="#" class="theme-btn btn-style-one"><span class="btn-title">Xem Thêm</span></a></div>
+                    </div>  
+                </div>
+            </div>
+		
+		<div class="slide-item" width="17801px">
+            	<div class="image-layer" style="background-image:url(images/New_2023/ff5_slide.png"></div>
+                <div class="auto-container">
+                    <div class="content-box">
+                        <h2 style="opacity: 0"> The <br> Red Team </h2>
+                        <div class="btn-box"><a href="#" class="theme-btn btn-style-one"><span class="btn-title">Xem Thêm</span></a></div>
+                    </div>  
+                </div>
+            </div>
+		
+		<div class="slide-item" width="17801px">
+            	<div class="image-layer" style="background-image:url(images/New_2023/wukong_slide.png"></div>
+                <div class="auto-container">
+                    <div class="content-box">
+                        <h2 style="opacity: 0"> The <br> Red Team </h2>
+                        <div class="btn-box"><a href="#" class="theme-btn btn-style-one"><span class="btn-title">Xem Thêm</span></a></div>
+                    </div>  
+                </div>
+            </div>
+            <div class="slide-item" width="17801px">
+            	<div class="image-layer" style="background-image:url(images/New_2023/40k_slide.png"></div>
+                <div class="auto-container">
+                    <div class="content-box">
+                        <h2 style="opacity: 0"> The <br> Red Team </h2>
+                        <div class="btn-box"><a href="#" class="theme-btn btn-style-one"><span class="btn-title">Xem Thêm</span></a></div>
+                    </div>  
+                </div>
+            </div>
+    </section>
+    
+    <!--End Banner Section -->
+    
+   <body style="background-image:url(images/BGG.png); background-size: cover; background-repeat: no-repeat;">
+
+	<!-- Welcome Section -->
+	<section class="welcome-section">
+		<div class="auto-container">
+			<!-- Sec Title -->
+			<div class="sec-title centered">
+				<h2>Việt Hóa Siêu Hot</h2>
+				<div class="title">Được tải nhiều nhất</div>
+			</div>
+			
+			<div class="row clearfix">
+				
+				<!--Default Portfolio Item-->
+				<div class="default-portfolio-item col-lg-4 col-md-4 col-sm-12 wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
+					<div class="inner-box hvr-bob">
+						<figure class="image-box"><img src="images/gallery/rdr2.png" alt=""></figure>
+						<!--Overlay Box-->
+						<div class="overlay-box">
+							<div class="overlay-inner">
+								<div class="content">
+									<h3><a href="#">Red Dead<br>Redemption 2</a></h3>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!--Default Portfolio Item-->
+			    <div class="default-portfolio-item col-lg-4 col-md-4 col-sm-12 wow fadeInUp" data-wow-delay="600ms" data-wow-duration="1500ms">
+					<div class="inner-box hvr-bob">
+						<figure class="image-box"><img src="images/gallery/er.jpg" alt=""></figure>
+						<!--Overlay Box-->
+						<div class="overlay-box">
+							<div class="overlay-inner">
+								<div class="content">
+									<h3><a href="#">Elden<br>Ring</a></h3>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!--Default Portfolio Item-->
+				<div class="default-portfolio-item col-lg-4 col-md-4 col-sm-12 wow fadeInUp" data-wow-delay="600ms" data-wow-duration="1500ms">
+					<div class="inner-box hvr-bob">
+						<figure class="image-box"><img src="images/gallery/Cyberpunk_500x500.jpg" alt=""></figure>
+						<!--Overlay Box-->
+						<div class="overlay-box">
+							<div class="overlay-inner">
+								<div class="content">
+									<h3><a href="#">Cyberpunk<br>2077</a></h3>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>	
+			<div class="default-portfolio-item col-lg-4 col-md-4 col-sm-12 wow fadeInUp" data-wow-delay="600ms" data-wow-duration="1500ms">
+					<div class="inner-box hvr-bob">
+						<figure class="image-box"><img src="images/gallery/kingdom.jpg" alt=""></figure>
+						<!--Overlay Box-->
+						<div class="overlay-box">
+							<div class="overlay-inner">
+								<div class="content">
+									<h3><a href="#">Kingdom Come: <br>Deliverance </a></h3>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			    <div class="default-portfolio-item col-lg-4 col-md-4 col-sm-12 wow fadeInUp" data-wow-delay="600ms" data-wow-duration="1500ms">
+					<div class="inner-box hvr-bob">
+						<figure class="image-box"><img src="images/New_2023/wukong_ava.png" alt=""></figure>
+						<!--Overlay Box-->
+						<div class="overlay-box">
+							<div class="overlay-inner">
+								<div class="content">
+									<h3><a href="#">Black Myth: Wukong</a></h3>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+								<!--Default Portfolio Item-->
+				<div class="default-portfolio-item col-lg-4 col-md-4 col-sm-12 wow fadeInUp" data-wow-delay="600ms" data-wow-duration="1500ms">
+					<div class="inner-box hvr-bob">
+						<figure class="image-box"><img src="images/New_2023/TLOU_ava.jpg" alt=""></figure>
+						<!--Overlay Box-->
+						<div class="overlay-box">
+							<div class="overlay-inner">
+								<div class="content">
+									<h3><a href="#">The Last<br>Of Us Part I</a></h3>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!--Default Portfolio Item-->
+			    <div class="default-portfolio-item col-lg-4 col-md-4 col-sm-12 wow fadeInUp" data-wow-delay="600ms" data-wow-duration="1500ms">
+					<div class="inner-box hvr-bob">
+						<figure class="image-box"><img src="images/New_2023/dave_ava.jpg" alt=""></figure>
+						<!--Overlay Box-->
+						<div class="overlay-box">
+							<div class="overlay-inner">
+								<div class="content">
+									<h3><a href="#">Dave<br>The Diver</a></h3>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="default-portfolio-item col-lg-4 col-md-4 col-sm-12 wow fadeInUp" data-wow-delay="600ms" data-wow-duration="1500ms">
+					<div class="inner-box hvr-bob">
+						<figure class="image-box"><img src="images/New_2023/palworld_ava.jpg" alt=""></figure>
+						<!--Overlay Box-->
+						<div class="overlay-box">
+							<div class="overlay-inner">
+								<div class="content">
+									<h3><a href="#">Palworld </a></h3>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				 <div class="default-portfolio-item col-lg-4 col-md-4 col-sm-12 wow fadeInUp" data-wow-delay="600ms" data-wow-duration="1500ms">
+					<div class="inner-box hvr-bob">
+						<figure class="image-box"><img src="images/New_2023/nrftw_ava.png" alt=""></figure>
+						<!--Overlay Box-->
+						<div class="overlay-box">
+							<div class="overlay-inner">
+								<div class="content">
+									<h3><a href="#">No Rest For The Wicked</a></h3>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			
+		<div style="margin: 0 auto; text-align: center">
+	        <a href="#" class="theme-btn btn-style-one"><span class="btn-title">Xem Thêm</span></a>
+	    </div>
+			
+		</div>
+	</section>
+	</br></br></br>
+		<div class="sec-title centered">
+				<h2>VIỆT HÓA TRẢI NGHIỆM SỚM</h2>
+					<div class="title4">Donate để tham gia trải nghiệm ngay</div>
+					<div class="title2">Kéo để xem nhiều hơn</div>
+					</br></br>
+	<!DOCTYPE html>
+<html lang="zxx" style=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="./trainghiem_files/swiper-bundle.min.css">
+	<link rel="stylesheet" href="./trainghiem_files/style.css">
+</head>
+
+<style>
+a.gz-all-btn.gz-btn-color.gz-about-top.gz-banner-btn {
+    color: #fff; /* Màu chữ mặc định */
+    background-color: #ff0c09; /* Màu nền mặc định */
+    text-decoration: none; /* Bỏ gạch chân */
+    transition: background-color 0.3s, color 0.3s; /* Thêm hiệu ứng chuyển đổi mượt */
+}
+
+a.gz-all-btn.gz-btn-color.gz-about-top.gz-banner-btn:hover {
+    color: #ff0c09 !important; /* Màu chữ khi hover */
+    background-color: #fff !important; /* Màu nền khi hover */
+}
+a.gz-all-btn2.gz-btn-color2.gz-about-top2.gz-banner-btn2 {
+    color: #fff; /* Màu chữ mặc định */
+    background-color: #ff0c09; /* Màu nền mặc định */
+    text-decoration: none; /* Bỏ gạch chân */
+    transition: background-color 0.3s, color 0.3s; /* Thêm hiệu ứng chuyển đổi mượt */
+}
+
+a.gz-all-btn2.gz-btn-color2.gz-about-top2.gz-banner-btn2:hover {
+    color: #ff0c09 !important; /* Màu chữ khi hover */
+    background-color: #fff !important; /* Màu nền khi hover */
+}
+
+/* Popup container */
+    .popup {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 9999999;
+        overflow: auto;
+    }
+
+    /* Popup content */
+    .popup-content {
+        position: relative;
+        background-color: #fff;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 600px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.1);
+    }
+
+    /* Close button */
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        color: #aaa;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+
+<body>
+   <!-- Popup Structure -->
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <span class="close">&times;</span>
+        <p id="popup-content"></p>
+    </div>
+</div>
+
+	<!-- banner section -->
+	<div class="gz-banner-wrapper">
+		<!-- slider -->
+		<div class="gz-banner-main">
+			<div class="swiper gz-banner-slider swiper-initialized swiper-horizontal swiper-pointer-events">
+				<div class="swiper-wrapper" id="swiper-wrapper-f3f78426a3cabea6" aria-live="off" style="transition-duration: 300ms; transform: translate3d(-3250px, 0px, 0px);">
+				    	<div class="swiper-slide swiper-slide-prev" style="width: 620px; margin-right: 30px;" role="group" aria-label="3 / 3" data-swiper-slide-index="2">
+						<div class="gz-banner-slider-inner">
+							<div class="gz-banner-slide-img">
+								<img src="./images/trainghiemsom/zelda.png" alt="" class="img-fluid">
+							</div>
+							<div class="gz-banner-slide-content">
+								<h3>The Legend of Zelda: Tears of the Kingdom</h3>
+								<p>Sau chiến thắng của Link trước Calamity Ganon trong Breath of the Wild đã cho phép các cư dân của vương quốc Hyrule đã có thể...</p>
+							<div class="parent-container">
+								<a class="show-popup gz-all-btn gz-btn-color gz-about-top gz-banner-btn" data-id="2">đăng ký</a>
+								    <a href="#" target="_blank" class="gz-all-btn2 gz-btn-color2 gz-about-top2 gz-banner-btn2">thông tin</a>
+								    </div>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide swiper-slide-prev" style="width: 620px; margin-right: 30px;" role="group" aria-label="3 / 3" data-swiper-slide-index="2">
+						<div class="gz-banner-slider-inner">
+							<div class="gz-banner-slide-img">
+								<img src="./images/trainghiemsom/coralisland.png" alt="" class="img-fluid">
+							</div>
+							<div class="gz-banner-slide-content">
+								<h3>Coral Island</h3>
+								
+								<p>Nếu bạn là fan của thể loại game nông trại, thì đây chắc hẳn là tựa game bạn không thể bỏ qua. Hóa thân thành một nông dân bắt đầu tại một hòn đảo có tên là Đảo San Hô...</p> <div class="parent-container">
+							<a class="show-popup gz-all-btn gz-btn-color gz-about-top gz-banner-btn" data-id="7">đăng ký</a>
+								    <a href="#" target="_blank" class="gz-all-btn2 gz-btn-color2 gz-about-top2 gz-banner-btn2">thông tin</a>
+								    </div>
+							</div>
+						</div>
+					</div>
+					
+
+					
+					
+					
+					
+					<div class="swiper-slide swiper-slide-prev" style="width: 620px; margin-right: 30px;" role="group" aria-label="3 / 3" data-swiper-slide-index="2">
+						<div class="gz-banner-slider-inner">
+							<div class="gz-banner-slide-img">
+								<img src="./images/trainghiemsom/lastepoch.png" alt="" class="img-fluid">
+							</div>
+							<div class="gz-banner-slide-content">
+								<h3>Last Epoch</h3>
+								
+								<p>Hòa mình vào một thế giới đa vũ trụ và bắt đầu tại Eterra, bạn sẽ hóa thân thành kẻ cứu rỗi thế gian khi tìm và thu thập các mảnh vỡ Epoch để định hình lại vũ trụ...</p> 
+								<div class="parent-container">
+								<a class="show-popup gz-all-btn gz-btn-color gz-about-top gz-banner-btn" data-id="11">đăng ký</a>
+								    <a href="#" target="_blank" class="gz-all-btn2 gz-btn-color2 gz-about-top2 gz-banner-btn2">thông tin</a>
+								    </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			<span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span><span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span><span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span><span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+			<div class="gz-about-arrow gz-banner-arrow">
+				
+				
+			</div>
+		</div>
+	</div>
+	<script>
+    // Nội dung HTML cho từng popup
+    var popupContents = {
+        2: '<a style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'red\'" onmouseout="this.style.color=\'red\'">Hướng dẫn đăng ký trải nghiệm sớm The Legend of Zelda: Tears of the Kingdom:</a></br>Để trải nghiệm sớm <a style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'red\'" onmouseout="this.style.color=\'red\'">Việt Hóa The Legend of Zelda: Tears of the Kingdom</a>, bạn hãy ủng hộ nhóm dịch (tối thiểu 50k) với nội dung CK: Zelda hoặc Zelda TOTK theo thông tin: <a href="https://theredteam.vn/donate" style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'blue\'" onmouseout="this.style.color=\'red\'" target="_blank">Donate</a> này, sau đó gửi ảnh CK vào discord: <a href="#" style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'blue\'" onmouseout="this.style.color=\'red\'" target="_blank">Discord</a> (kênh nhận role) để lấy role vào channel tải patch trải nghiệm sớm nhé.',
+        5: '<a style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'red\'" onmouseout="this.style.color=\'red\'">Hướng dẫn đăng ký trải nghiệm sớm Dragon Dogma 2:</a></br>Để trải nghiệm sớm <a style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'red\'" onmouseout="this.style.color=\'red\'">Việt Hóa Dragon Dogma 2</a>, bạn hãy ủng hộ nhóm dịch (tối thiểu 50k) với nội dung CK: Dragon Dogma 2 hoặc DD2 theo thông tin: <a href="https://theredteam.vn/donate" style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'blue\'" onmouseout="this.style.color=\'red\'" target="_blank">Donate</a> này, sau đó gửi ảnh CK vào discord: <a href="#" style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'blue\'" onmouseout="this.style.color=\'red\'" target="_blank">Discord</a> (kênh nhận role) để lấy role vào channel tải patch trải nghiệm sớm nhé.',
+        7: '<a style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'red\'" onmouseout="this.style.color=\'red\'">Hướng dẫn đăng ký trải nghiệm sớm Coral Island:</a></br>Để trải nghiệm sớm <a style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'red\'" onmouseout="this.style.color=\'red\'">Việt Hóa Coral Island</a>, bạn hãy ủng hộ nhóm dịch (tối thiểu 50k) với nội dung CK: Coral Island hoặc Coral theo thông tin: <a href="https://theredteam.vn/donate" style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'blue\'" onmouseout="this.style.color=\'red\'" target="_blank">Donate</a> này, sau đó gửi ảnh CK vào discord: <a href="#" style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'blue\'" onmouseout="this.style.color=\'red\'" target="_blank">Discord</a> (kênh nhận role) để lấy role vào channel tải patch trải nghiệm sớm nhé.',
+        11: '<a style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'red\'" onmouseout="this.style.color=\'red\'">Hướng dẫn đăng ký trải nghiệm sớm Last Epoch:</a></br>Để trải nghiệm sớm <a style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'red\'" onmouseout="this.style.color=\'red\'">Việt Hóa Last Epoch</a>, bạn hãy ủng hộ nhóm dịch (tối thiểu 50k) với nội dung CK: Last Epoch hoặc LE theo thông tin: <a href="https://theredteam.vn/donate" style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'blue\'" onmouseout="this.style.color=\'red\'" target="_blank">Donate</a> này, sau đó gửi ảnh CK vào discord: <a href="#" style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'blue\'" onmouseout="this.style.color=\'red\'" target="_blank">Discord</a> (kênh nhận role) để lấy role vào channel tải patch trải nghiệm sớm nhé.',
+        15: '<a style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'red\'" onmouseout="this.style.color=\'red\'">Hướng dẫn đăng ký trải nghiệm sớm TWIN MIRROR:</a></br>Để trải nghiệm sớm <a style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'red\'" onmouseout="this.style.color=\'red\'">Việt Hóa TWIN MIRROR</a>, bạn hãy ủng hộ nhóm dịch (tối thiểu 30k) với nội dung CK: TWIN MIRROR hoặc TM theo thông tin: <a href="https://theredteam.vn/donate" style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'blue\'" onmouseout="this.style.color=\'red\'" target="_blank">Donate</a> này, sau đó gửi ảnh CK vào discord: <a href="#" style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'blue\'" onmouseout="this.style.color=\'red\'" target="_blank">Discord</a> (kênh nhận role) để lấy role vào channel tải patch trải nghiệm sớm nhé.',
+        16: '<a style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'red\'" onmouseout="this.style.color=\'red\'">Hướng dẫn đăng ký trải nghiệm sớm The Bridge Curse 2:</a></br>Để trải nghiệm sớm <a style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'red\'" onmouseout="this.style.color=\'red\'">Việt Hóa The Bridge Curse 2</a>, bạn hãy ủng hộ nhóm dịch (tối thiểu 30k) với nội dung CK: The Bridge Curse 2 hoặc TBC 2 theo thông tin: <a href="https://theredteam.vn/donate" style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'blue\'" onmouseout="this.style.color=\'red\'" target="_blank">Donate</a> này, sau đó gửi ảnh CK vào discord: <a href="#" style="color: red; transition: color 0.3s;" onmouseover="this.style.color=\'blue\'" onmouseout="this.style.color=\'red\'" target="_blank">Discord</a> (kênh nhận role) để lấy role vào channel tải patch trải nghiệm sớm nhé.'
+    };
+
+    // Lấy popup
+    var popup = document.getElementById("popup");
+
+    // Lấy <span> để đóng popup
+    var span = document.getElementsByClassName("close")[0];
+
+    // Lấy tất cả các nút mở popup
+    var btns = document.getElementsByClassName("show-popup");
+
+    // Thêm sự kiện click cho mỗi nút
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].onclick = function(event) {
+            event.preventDefault();
+            var id = this.getAttribute("data-id");
+            document.getElementById("popup-content").innerHTML = popupContents[id];
+            popup.style.display = "block";
+        }
+    }
+
+    // Đóng popup khi click vào <span>
+    span.onclick = function() {
+        popup.style.display = "none";
+    }
+
+    // Đóng popup khi click ra ngoài popup
+    window.onclick = function(event) {
+        if (event.target == popup) {
+            popup.style.display = "none";
+        }
+    }
+</script>
+	
+	<script src="./trainghiem_files/jquery.min.js.download"></script>
+	<script src="./trainghiem_files/bootstrap.bundle.min.js.download"></script>
+	<script src="./trainghiem_files/swiper.min.js.download"></script>
+	<script src="./trainghiem_files/SmoothScroll.min.js.download"></script>
+	<script src="./trainghiem_files/custom.js.download"></script>
+
+
+</body></html>	</div>
+	<section class="welcome-section">
+		<div class="auto-container">
+			<!-- Sec Title -->
+			<div class="sec-title centered">
+				<h2>Thư Viện Game Việt Hóa</h2></br>
+				<div class="title2">Tổng hợp game được Việt hóa bởi The Red Team từ A - Z</div>
+				<div class="title">(Nếu bạn tìm không ra game cần tìm thì game đó chưa được việt hoá)</div>
+			</div>
+			
+				
+		<!DOCTYPE html>
+   <html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+      <!--=============== REMIXICONS ===============-->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css" crossorigin="">
+
+      <!--=============== SWIPER CSS ===============-->
+      <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+
+      <!--=============== CSS ===============-->
+      <link rel="stylesheet" href="assets/css/styles.css">
+   
+      <title>Responsive card slider - Bedimcode</title>
+   </head>
+   <style>
+  .alphabet-links {
+    text-align: center;
+    margin-bottom: 20px; /* Adjust margin as needed */
+}
+
+.alphabet-links a {
+    margin: 0 10px; /* Adjust margin between letters */
+    font-size: 20px; /* Increase font size */
+}
+
+.alphabet-links a.active {
+    color: red; /* Change color to indicate active link */
+}
+   </style>
+   <body>
+   <div class="alphabet-links">
+    <!-- Anchor tags for each letter of the alphabet -->
+    <a href="#A" class="alphabet-link">A</a>
+    <a href="#B" class="alphabet-link">B</a>
+    <a href="#C" class="alphabet-link">C</a>
+    <a href="#D" class="alphabet-link">D</a>
+    <a href="#E" class="alphabet-link">E</a>
+    <a href="#F" class="alphabet-link">F</a>
+    <a href="#G" class="alphabet-link">G</a>
+    <a href="#H" class="alphabet-link">H</a>
+    <a href="#I" class="alphabet-link">I</a>
+    <a href="#J" class="alphabet-link">J</a>
+    <a href="#K" class="alphabet-link">K</a>
+    <a href="#L" class="alphabet-link">L</a>
+    <a href="#M" class="alphabet-link">M</a>
+    <a href="#N" class="alphabet-link">N</a>
+    <a href="#O" class="alphabet-link">O</a>
+    <a href="#P" class="alphabet-link">P</a>
+    <a href="#Q" class="alphabet-link">Q</a>
+    <a href="#R" class="alphabet-link">R</a>
+    <a href="#S" class="alphabet-link">S</a>
+    <a href="#T" class="alphabet-link">T</a>
+    <a href="#U" class="alphabet-link">U</a>
+    <a href="#V" class="alphabet-link">V</a>
+    <a href="#W" class="alphabet-link">W</a>
+    <a href="#X" class="alphabet-link">X</a>
+    <a href="#Y" class="alphabet-link">Y</a>
+    <a href="#Z" class="alphabet-link">Z</a>
+    <!-- Add other letters as needed -->
+</div>
+</br>
+ <div class="alphabet-links">
+   <a style="color: red; transition: color 0.3s;" onmouseover="this.style.color='red'" onmouseout="this.style.color='red'" class="alphabet-link">GIỮ VÀ KÉO ĐỂ XEM THÊM NHIỀU KẾT QUẢ</a>
+    <!-- Add other letters as needed -->
+</div>
+      <section id="A" class="container">
+         <div class="card__container swiper">
+            <div class="card__content">
+               <div class="swiper-wrapper">
+                   <article class="card__article swiper-slide">
+        <div class="card__image">
+            <img src="https://theredteam.vn/images/New_2023/ash_ava.png" alt="image" class="card__img">
+            <div class="card__shadow"></div>
+        </div>
+        <div class="card__data">
+            <h3 class="card__name">A Short Hike</h3>
+            <a href="@" class="card__button">TẢI NGAY</a>
+        </div>
+    </article>
+                   <article class="card__article swiper-slide">
+        <div class="card__image">
+            <img src="https://theredteam.vn/images/New_2023/alone_ava.png" alt="image" class="card__img">
+            <div class="card__shadow"></div>
+        </div>
+        <div class="card__data">
+            <h3 class="card__name">Alone In The Dark</h3>
+            <a href="#" class="card__button">TẢI NGAY</a>
+        </div>
+    </article>
+                  <article class="card__article swiper-slide">
+        <div class="card__image">
+            <img src="https://theredteam.vn/images/gallery/A-Plague-Tale-Requiem-Viet-hoa-avatar.jpg" alt="image" class="card__img">
+            <div class="card__shadow"></div>
+        </div>
+        <div class="card__data">
+            <h3 class="card__name">A Plague Tale: Requiem</h3>
+            <a href="#" class="card__button">TẢI NGAY</a>
+        </div>
+    </article>
+      <!--=============== SWIPER JS ===============-->
+      <script src="assets/js/swiper-bundle.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Show section with ID "A" by default
+    showSection("A");
+
+    // Get all alphabet links
+    const alphabetLinks = document.querySelectorAll(".alphabet-link");
+
+    // Add click event listener to each alphabet link
+    alphabetLinks.forEach(function(link) {
+        link.addEventListener("click", function(event) {
+            event.preventDefault();
+            const targetId = this.getAttribute("href").substring(1); // Get target section ID
+            showSection(targetId); // Show section with corresponding ID
+
+            // Remove active class from all links
+            alphabetLinks.forEach(function(link) {
+                link.classList.remove("active");
+            });
+
+            // Add active class to the clicked link
+            this.classList.add("active");
+        });
+    });
+
+    // Add active class to the default alphabet link (A)
+    document.querySelector('a[href="#A"]').classList.add("active");
+
+    // Function to show section based on ID
+    function showSection(id) {
+        // Hide all sections
+        const sections = document.querySelectorAll(".container");
+        sections.forEach(function(section) {
+            section.style.display = "none";
+        });
+
+        // Show the section with the corresponding ID
+        const targetSection = document.getElementById(id);
+        if (targetSection) {
+            targetSection.style.display = "block";
+        }
+    }
+});
+</script>
+      <!--=============== MAIN JS ===============-->
+      <script src="assets/js/main.js"></script>
+   </body>
+</html>	
+	</section>
+<!DOCTYPE html>
+<!-- saved from url=(0040)file:///C:/Users/cucte/Desktop/Red2.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link href="./theredteam_files/main.css" rel="stylesheet"><style>@keyframes OvkngOqy0CTv07ZqAIPdN{0%{opacity:0}100%{opacity:1}}@-moz-keyframes OvkngOqy0CTv07ZqAIPdN{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes OvkngOqy0CTv07ZqAIPdN{0%{opacity:0}100%{opacity:1}}@keyframes HXzLspOgTDH_bDTnSgSQd{0%{left:-76vw}100%{left:0}}@-moz-keyframes HXzLspOgTDH_bDTnSgSQd{0%{left:-76vw}100%{left:0}}@-webkit-keyframes HXzLspOgTDH_bDTnSgSQd{0%{left:-76vw}100%{left:0}}._2WHHmyrJNsleSPqyK5918a{user-select:none;box-sizing:border-box;text-align:center;color:#f9f9f9}._2WHHmyrJNsleSPqyK5918a *{box-sizing:border-box}._2WHHmyrJNsleSPqyK5918a:lang(ar){direction:rtl}._2WHHmyrJNsleSPqyK5918a:lang(ar){}._2WHHmyrJNsleSPqyK5918a:lang(ru),._2WHHmyrJNsleSPqyK5918a:lang(),._2WHHmyrJNsleSPqyK5918a:lang(vn),._2WHHmyrJNsleSPqyK5918a:lang(el),._2WHHmyrJNsleSPqyK5918a:lang(gr),._2WHHmyrJNsleSPqyK5918a:lang(th){}._2WHHmyrJNsleSPqyK5918a:lang(ko),._2WHHmyrJNsleSPqyK5918a:lang(kr){}._3AYbzClUxsU2maVqIee5X{background-color:#111;padding:0px 0px 48px 0px;border-top:2px solid #343434}._3AYbzClUxsU2maVqIee5X a._2b3IoYzyfOKJTNJrPVGK9E{font-weight:bold}._3aMN1Pvgv0oz7m1Goc3609{border-top:none;background:linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0) 100%)}</style><style>@keyframes _1imkJ0DYYBzjZJvzc5iLhh{0%{opacity:0}100%{opacity:1}}@-moz-keyframes _1imkJ0DYYBzjZJvzc5iLhh{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes _1imkJ0DYYBzjZJvzc5iLhh{0%{opacity:0}100%{opacity:1}}@keyframes _16AXZ5QJGuVuBLus_-IVgi{0%{left:-76vw}100%{left:0}}@-moz-keyframes _16AXZ5QJGuVuBLus_-IVgi{0%{left:-76vw}100%{left:0}}@-webkit-keyframes _16AXZ5QJGuVuBLus_-IVgi{0%{left:-76vw}100%{left:0}}._29my_mPdIV9jPVioVH_jGd{user-select:none;box-sizing:border-box;;background:#292929;padding:24px;margin:0;color:#7e7e7e;font-weight:700;font-size:13px;letter-spacing:.08em;text-align:center;text-transform:uppercase}._29my_mPdIV9jPVioVH_jGd *{box-sizing:border-box}._29my_mPdIV9jPVioVH_jGd:lang(ar){}._29my_mPdIV9jPVioVH_jGd:lang(ru),._29my_mPdIV9jPVioVH_jGd:lang(vi),._29my_mPdIV9jPVioVH_jGd:lang(vn),._29my_mPdIV9jPVioVH_jGd:lang(el),._29my_mPdIV9jPVioVH_jGd:lang(gr),._29my_mPdIV9jPVioVH_jGd:lang(th){}._29my_mPdIV9jPVioVH_jGd:lang(ko),._29my_mPdIV9jPVioVH_jGd:lang(kr){}._29my_mPdIV9jPVioVH_jGd:lang(ar){;letter-spacing:0}._29my_mPdIV9jPVioVH_jGd ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:row;flex-wrap:nowrap;justify-content:center;align-items:center;flex-wrap:wrap}@media(max-width: 1024px){._29my_mPdIV9jPVioVH_jGd ul{flex-direction:column}}@media(max-width: 1024px){._29my_mPdIV9jPVioVH_jGd ul li{margin:12px 0}}._29my_mPdIV9jPVioVH_jGd ul li a{display:block;padding:8px 16px;text-decoration:none;color:#f9f9f9;transition:all .2s linear}._29my_mPdIV9jPVioVH_jGd ul li a:hover,._29my_mPdIV9jPVioVH_jGd ul li a:active,._29my_mPdIV9jPVioVH_jGd ul li a:focus{background:rgba(128,128,128,.3);border-radius:6.4px}._29rmz3K2ZqEOGHexiNGGsl{background:transparent}</style><style>@keyframes _1ZSUBbrjg5N-SwYJTAVKtK{0%{opacity:0}100%{opacity:1}}@-moz-keyframes _1ZSUBbrjg5N-SwYJTAVKtK{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes _1ZSUBbrjg5N-SwYJTAVKtK{0%{opacity:0}100%{opacity:1}}@keyframes _2ay4H-NngyECH2Tfbgq1iQ{0%{left:-76vw}100%{left:0}}@-moz-keyframes _2ay4H-NngyECH2Tfbgq1iQ{0%{left:-76vw}100%{left:0}}@-webkit-keyframes _2ay4H-NngyECH2Tfbgq1iQ{0%{left:-76vw}100%{left:0}}._1y5wMFtMhfOQOwUmHI92Cj{display:flex;align-items:baseline;justify-content:center;padding:24px 0px 20px}@media(max-width: 768px){._1y5wMFtMhfOQOwUmHI92Cj{flex-direction:column;align-items:center;gap:20px}}._2Pgrt3koXCPng_hCKD8v8s a svg{fill:#737373}._2Pgrt3koXCPng_hCKD8v8s a svg:hover,._2Pgrt3koXCPng_hCKD8v8s a svg:focus{fill:#f9f9f9}._3li6ccqc4XDHGfNlvjqugt a svg{fill:#f9f9f9}._2130dY8F9cjIeCdDGsWgRA{user-select:none;box-sizing:border-box;display:inline-block;margin:0 20px}._2130dY8F9cjIeCdDGsWgRA *{box-sizing:border-box}._2130dY8F9cjIeCdDGsWgRA a svg{fill:#737373}._2130dY8F9cjIeCdDGsWgRA a svg:hover,._2130dY8F9cjIeCdDGsWgRA a svg:focus{fill:#f9f9f9}._2130dY8F9cjIeCdDGsWgRA a img{opacity:.4}._2130dY8F9cjIeCdDGsWgRA a img:hover,._2130dY8F9cjIeCdDGsWgRA a img:focus{opacity:1}</style><style>@keyframes _10RT-fi2ywBeFvylrwrKXJ{0%{opacity:0}100%{opacity:1}}@-moz-keyframes _10RT-fi2ywBeFvylrwrKXJ{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes _10RT-fi2ywBeFvylrwrKXJ{0%{opacity:0}100%{opacity:1}}@keyframes _1soH7LVuYjdaVOrwefg_WA{0%{left:-76vw}100%{left:0}}@-moz-keyframes _1soH7LVuYjdaVOrwefg_WA{0%{left:-76vw}100%{left:0}}@-webkit-keyframes _1soH7LVuYjdaVOrwefg_WA{0%{left:-76vw}100%{left:0}}._3tOmEyMTDQ_ETh9CuxsqLK{user-select:none;box-sizing:border-box;padding:18px 0;user-select:none;box-sizing:border-box}._3tOmEyMTDQ_ETh9CuxsqLK *{box-sizing:border-box}._3tOmEyMTDQ_ETh9CuxsqLK ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:row;flex-wrap:nowrap;justify-content:center;align-items:center}@media(max-width: 1024px){._3tOmEyMTDQ_ETh9CuxsqLK ul{flex-wrap:wrap}}._3tOmEyMTDQ_ETh9CuxsqLK ul li{margin:6px;background:rgba(128,128,128,.2);border-radius:12px;width:32px;height:32px}@media(max-width: 1024px){._3tOmEyMTDQ_ETh9CuxsqLK ul li{width:48px;height:48px}}._3tOmEyMTDQ_ETh9CuxsqLK ul li a._3YN2W34Ia8MMkttsKrAc5g{display:flex;justify-content:center;align-items:center;overflow:hidden;text-decoration:none;cursor:pointer;height:100%}@media(max-width: 1024px){._3tOmEyMTDQ_ETh9CuxsqLK ul li a._3YN2W34Ia8MMkttsKrAc5g{margin:12px;height:auto}}._3tOmEyMTDQ_ETh9CuxsqLK ul li a._3YN2W34Ia8MMkttsKrAc5g .qYdzzVvsALoZ6Jcs-tLLk{opacity:0;user-select:none;color:transparent;text-decoration:none;display:inline-block;width:0;white-space:nowrap}._3tOmEyMTDQ_ETh9CuxsqLK ul li a._3YN2W34Ia8MMkttsKrAc5g:hover,._3tOmEyMTDQ_ETh9CuxsqLK ul li a._3YN2W34Ia8MMkttsKrAc5g:active,._3tOmEyMTDQ_ETh9CuxsqLK ul li a._3YN2W34Ia8MMkttsKrAc5g:focus{opacity:1}._3tOmEyMTDQ_ETh9CuxsqLK ul li a._3YN2W34Ia8MMkttsKrAc5g svg{width:16px;height:16px;fill:#f9f9f9;fill-rule:evenodd}@media(max-width: 1024px){._3tOmEyMTDQ_ETh9CuxsqLK ul li a._3YN2W34Ia8MMkttsKrAc5g svg{width:24px;height:24px}}</style><style>@keyframes _26gRLr7RpT6AlShTDP4JqW{0%{opacity:0}100%{opacity:1}}@-moz-keyframes _26gRLr7RpT6AlShTDP4JqW{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes _26gRLr7RpT6AlShTDP4JqW{0%{opacity:0}100%{opacity:1}}@keyframes _2kGks-uUHDTn4owz7tNzLf{0%{left:-76vw}100%{left:0}}@-moz-keyframes _2kGks-uUHDTn4owz7tNzLf{0%{left:-76vw}100%{left:0}}@-webkit-keyframes _2kGks-uUHDTn4owz7tNzLf{0%{left:-76vw}100%{left:0}}._2MQBVXoMNHaA5jCv6-rKyc{;margin:0 auto;max-width:640px;font-weight:500;font-size:13px;line-height:140%;text-align:center;word-break:keep-all;color:#7e7e7e}._2MQBVXoMNHaA5jCv6-rKyc:lang(ar){}._2MQBVXoMNHaA5jCv6-rKyc:lang(ru),._2MQBVXoMNHaA5jCv6-rKyc:lang(vi),._2MQBVXoMNHaA5jCv6-rKyc:lang(vn),._2MQBVXoMNHaA5jCv6-rKyc:lang(el),._2MQBVXoMNHaA5jCv6-rKyc:lang(gr),._2MQBVXoMNHaA5jCv6-rKyc:lang(th){}._2MQBVXoMNHaA5jCv6-rKyc:lang(ko),._2MQBVXoMNHaA5jCv6-rKyc:lang(kr){}@media(max-width: 640px){._2MQBVXoMNHaA5jCv6-rKyc{max-width:368px}}._2MQBVXoMNHaA5jCv6-rKyc a{color:#7e7e7e;text-decoration:underline}._2MQBVXoMNHaA5jCv6-rKyc a:hover,._2MQBVXoMNHaA5jCv6-rKyc a:active,._2MQBVXoMNHaA5jCv6-rKyc a:focus{color:#7e7e7e}._2MQBVXoMNHaA5jCv6-rKyc p.sqwC2nnXdkGzh_DTJl_2O{margin:0px auto}.zFO11oYC4TH7DuO1rJ7mN{color:#f9f9f9}</style><style>@keyframes _1tonSWiVULkHJ1hRuouhbb{0%{opacity:0}100%{opacity:1}}@-moz-keyframes _1tonSWiVULkHJ1hRuouhbb{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes _1tonSWiVULkHJ1hRuouhbb{0%{opacity:0}100%{opacity:1}}@keyframes _3AvRr-3afDp0qSmSMnSA7r{0%{left:-76vw}100%{left:0}}@-moz-keyframes _3AvRr-3afDp0qSmSMnSA7r{0%{left:-76vw}100%{left:0}}@-webkit-keyframes _3AvRr-3afDp0qSmSMnSA7r{0%{left:-76vw}100%{left:0}}._2Ojj9KgtyZTHH-I2MkvQqi{user-select:none;box-sizing:border-box;;padding:24px 0px 28px;font-weight:700;font-size:13px;letter-spacing:.08em;text-align:center;text-transform:uppercase}._2Ojj9KgtyZTHH-I2MkvQqi *{box-sizing:border-box}._2Ojj9KgtyZTHH-I2MkvQqi:lang(ar){}._2Ojj9KgtyZTHH-I2MkvQqi:lang(ru),._2Ojj9KgtyZTHH-I2MkvQqi:lang(vi),._2Ojj9KgtyZTHH-I2MkvQqi:lang(vn),._2Ojj9KgtyZTHH-I2MkvQqi:lang(el),._2Ojj9KgtyZTHH-I2MkvQqi:lang(gr),._2Ojj9KgtyZTHH-I2MkvQqi:lang(th){}._2Ojj9KgtyZTHH-I2MkvQqi:lang(ko),._2Ojj9KgtyZTHH-I2MkvQqi:lang(kr){}._2Ojj9KgtyZTHH-I2MkvQqi:lang(ar){;letter-spacing:0}._2Ojj9KgtyZTHH-I2MkvQqi:lang(ko){font-weight:normal}._2Ojj9KgtyZTHH-I2MkvQqi ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:row;flex-wrap:nowrap;justify-content:center;align-items:center;flex-wrap:wrap}@media(max-width: 1024px){._2Ojj9KgtyZTHH-I2MkvQqi ul{flex-direction:column}}@media(max-width: 1024px){._2Ojj9KgtyZTHH-I2MkvQqi ul li{margin:12px 0}._2Ojj9KgtyZTHH-I2MkvQqi ul li:first-child{margin-top:0}._2Ojj9KgtyZTHH-I2MkvQqi ul li:last-child{margin-bottom:0}}._2Ojj9KgtyZTHH-I2MkvQqi ul li a{display:block;padding:8px 16px;text-decoration:none;color:#f9f9f9;transition:all .2s linear}._2Ojj9KgtyZTHH-I2MkvQqi ul li a:hover,._2Ojj9KgtyZTHH-I2MkvQqi ul li a:active,._2Ojj9KgtyZTHH-I2MkvQqi ul li a:focus{background:rgba(128,128,128,.3);border-radius:6.4px}._3LFVPCQ-2_CzKaO2zYBugf{font-weight:700}</style><style>@keyframes _3vFEieyXk6cFf95dKA538d{0%{opacity:0}100%{opacity:1}}@-moz-keyframes _3vFEieyXk6cFf95dKA538d{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes _3vFEieyXk6cFf95dKA538d{0%{opacity:0}100%{opacity:1}}@keyframes _2ewo1YqvPIKFFlaxNLb4DQ{0%{left:-76vw}100%{left:0}}@-moz-keyframes _2ewo1YqvPIKFFlaxNLb4DQ{0%{left:-76vw}100%{left:0}}@-webkit-keyframes _2ewo1YqvPIKFFlaxNLb4DQ{0%{left:-76vw}100%{left:0}}._1BiwNWzqtOdFM9Aefa2YbM{user-select:none;box-sizing:border-box;font-weight:500;display:flex;flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center}._1BiwNWzqtOdFM9Aefa2YbM *{box-sizing:border-box}._1BiwNWzqtOdFM9Aefa2YbM ._2nq5cqD9DXcJxtSaQ3I_nK{max-width:100%;padding:8px 12px;background:#292929;border-radius:8px}._1BiwNWzqtOdFM9Aefa2YbM ._3D_hnYS4CHKsqOwdJ6r1yh{display:flex;flex-direction:row;flex-wrap:nowrap;justify-content:center;align-items:center}._1BiwNWzqtOdFM9Aefa2YbM .o6-G7b-VAzGZ_yBQ9iIXE{display:block;background-color:transparent;background-repeat:no-repeat;background-size:contain;flex-shrink:0;margin:4px 0;max-width:100%}._1BiwNWzqtOdFM9Aefa2YbM .o6-G7b-VAzGZ_yBQ9iIXE img{display:block;max-width:100%}._1BiwNWzqtOdFM9Aefa2YbM .o6-G7b-VAzGZ_yBQ9iIXE ._2CPso75bDYKgqcwW-qa0CZ{opacity:0;user-select:none;color:transparent;text-decoration:none}._1BiwNWzqtOdFM9Aefa2YbM ._2whETlN2IthWQVWlE9pIeQ{display:inline-block;text-align:left;color:#efefef;margin-left:12px;font-size:13px;font-weight:600;line-height:150%;font-family:"FF Mark W05",Arial,sans-serif}._1BiwNWzqtOdFM9Aefa2YbM ._2whETlN2IthWQVWlE9pIeQ:lang(ar){font-family:"Cairo",Tahoma,sans-serif}._1BiwNWzqtOdFM9Aefa2YbM ._2whETlN2IthWQVWlE9pIeQ:lang(ru),._1BiwNWzqtOdFM9Aefa2YbM ._2whETlN2IthWQVWlE9pIeQ:lang(vi),._1BiwNWzqtOdFM9Aefa2YbM ._2whETlN2IthWQVWlE9pIeQ:lang(vn),._1BiwNWzqtOdFM9Aefa2YbM ._2whETlN2IthWQVWlE9pIeQ:lang(el),._1BiwNWzqtOdFM9Aefa2YbM ._2whETlN2IthWQVWlE9pIeQ:lang(gr),._1BiwNWzqtOdFM9Aefa2YbM ._2whETlN2IthWQVWlE9pIeQ:lang(th){font-family:"Neue Frutiger World",Tahoma,sans-serif}._1BiwNWzqtOdFM9Aefa2YbM ._2whETlN2IthWQVWlE9pIeQ:lang(ko),._1BiwNWzqtOdFM9Aefa2YbM ._2whETlN2IthWQVWlE9pIeQ:lang(kr){font-family:"RixSGo",Tahoma,sans-serif}</style><style>@keyframes _3NIxwYddS6X8Q1KiMznyxw{0%{opacity:0}100%{opacity:1}}@-moz-keyframes _3NIxwYddS6X8Q1KiMznyxw{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes _3NIxwYddS6X8Q1KiMznyxw{0%{opacity:0}100%{opacity:1}}@keyframes _3xjoQH1z30G-eVNBRuRrK2{0%{left:-76vw}100%{left:0}}@-moz-keyframes _3xjoQH1z30G-eVNBRuRrK2{0%{left:-76vw}100%{left:0}}@-webkit-keyframes _3xjoQH1z30G-eVNBRuRrK2{0%{left:-76vw}100%{left:0}}.gTMSCmOmuAGO07fgXCYyl{background-color:#be29cc;color:#f9f9f9;animation-name:AjYB__I4lxARaK2rZaeA_;animation-duration:.25s;animation-fill-mode:forwards}.gTMSCmOmuAGO07fgXCYyl._1HA-sOFHHJXyGDjeDSsNYE{animation-name:_1gXbEQJLUd8hxFLAADf314}.gTMSCmOmuAGO07fgXCYyl .OhdkmipE5U5xT9sLQKIDG{padding:40px;margin:0 auto;max-width:1200px;display:flex;align-items:center;justify-content:center}@media(max-width: 1024px){.gTMSCmOmuAGO07fgXCYyl .OhdkmipE5U5xT9sLQKIDG{display:block}}.gTMSCmOmuAGO07fgXCYyl .BsMRP1TEghAVfpeDZKmC2{font-family:"FF Mark W05",Arial,sans-serif;text-align:left}.gTMSCmOmuAGO07fgXCYyl .BsMRP1TEghAVfpeDZKmC2:lang(ar){font-family:"Cairo",Tahoma,sans-serif}.gTMSCmOmuAGO07fgXCYyl .BsMRP1TEghAVfpeDZKmC2:lang(ru),.gTMSCmOmuAGO07fgXCYyl .BsMRP1TEghAVfpeDZKmC2:lang(vi),.gTMSCmOmuAGO07fgXCYyl .BsMRP1TEghAVfpeDZKmC2:lang(vn),.gTMSCmOmuAGO07fgXCYyl .BsMRP1TEghAVfpeDZKmC2:lang(el),.gTMSCmOmuAGO07fgXCYyl .BsMRP1TEghAVfpeDZKmC2:lang(gr),.gTMSCmOmuAGO07fgXCYyl .BsMRP1TEghAVfpeDZKmC2:lang(th){font-family:"Neue Frutiger World",Tahoma,sans-serif}.gTMSCmOmuAGO07fgXCYyl .BsMRP1TEghAVfpeDZKmC2:lang(ko),.gTMSCmOmuAGO07fgXCYyl .BsMRP1TEghAVfpeDZKmC2:lang(kr){font-family:"RixSGo",Tahoma,sans-serif}.gTMSCmOmuAGO07fgXCYyl .BsMRP1TEghAVfpeDZKmC2:lang(ar){text-align:right}.gTMSCmOmuAGO07fgXCYyl ._15-3x5O9004mx3WEFrVqjr{display:flex}.gTMSCmOmuAGO07fgXCYyl ._2JnNSuq3FhPMBl5TrHpFPo{padding:0 0 10px 0;font-size:1.6rem}.gTMSCmOmuAGO07fgXCYyl ._355CtdiCHSGJmpXKwU3M2Q{max-width:280px;padding:10px}.gTMSCmOmuAGO07fgXCYyl ._355CtdiCHSGJmpXKwU3M2Q img{width:100%}.gTMSCmOmuAGO07fgXCYyl ._2T5qlIMM64b-b9se-Kow3c{font-size:1.2rem}.gTMSCmOmuAGO07fgXCYyl ._2ZH5Lphj52JvxKM2RKUAdv{padding:10px 0}@media(max-width: 1024px){.gTMSCmOmuAGO07fgXCYyl ._2ZH5Lphj52JvxKM2RKUAdv{flex-basis:50%}}.gTMSCmOmuAGO07fgXCYyl ._2ZH5Lphj52JvxKM2RKUAdv ._28iHJ95fwwWspxLeI9ID6c{max-height:68px;display:inline-block;cursor:pointer;padding:20px 40px;margin:10px 20px;background-color:#8e1f99;border-radius:4px;font-family:"FF Mark W05",Arial,sans-serif;white-space:nowrap;text-decoration:none}.gTMSCmOmuAGO07fgXCYyl ._2ZH5Lphj52JvxKM2RKUAdv ._28iHJ95fwwWspxLeI9ID6c:lang(ar){font-family:"Cairo",Tahoma,sans-serif}.gTMSCmOmuAGO07fgXCYyl ._2ZH5Lphj52JvxKM2RKUAdv ._28iHJ95fwwWspxLeI9ID6c:lang(ru),.gTMSCmOmuAGO07fgXCYyl ._2ZH5Lphj52JvxKM2RKUAdv ._28iHJ95fwwWspxLeI9ID6c:lang(vi),.gTMSCmOmuAGO07fgXCYyl ._2ZH5Lphj52JvxKM2RKUAdv ._28iHJ95fwwWspxLeI9ID6c:lang(vn),.gTMSCmOmuAGO07fgXCYyl ._2ZH5Lphj52JvxKM2RKUAdv ._28iHJ95fwwWspxLeI9ID6c:lang(el),.gTMSCmOmuAGO07fgXCYyl ._2ZH5Lphj52JvxKM2RKUAdv ._28iHJ95fwwWspxLeI9ID6c:lang(gr),.gTMSCmOmuAGO07fgXCYyl ._2ZH5Lphj52JvxKM2RKUAdv ._28iHJ95fwwWspxLeI9ID6c:lang(th){font-family:"Neue Frutiger World",Tahoma,sans-serif}.gTMSCmOmuAGO07fgXCYyl ._2ZH5Lphj52JvxKM2RKUAdv ._28iHJ95fwwWspxLeI9ID6c:lang(ko),.gTMSCmOmuAGO07fgXCYyl ._2ZH5Lphj52JvxKM2RKUAdv ._28iHJ95fwwWspxLeI9ID6c:lang(kr){font-family:"RixSGo",Tahoma,sans-serif}.gTMSCmOmuAGO07fgXCYyl ._2ZH5Lphj52JvxKM2RKUAdv ._28iHJ95fwwWspxLeI9ID6c:hover{background-color:#7b1385}.gTMSCmOmuAGO07fgXCYyl ._2ZH5Lphj52JvxKM2RKUAdv ._28iHJ95fwwWspxLeI9ID6c:active{background-color:#670770}.gTMSCmOmuAGO07fgXCYyl ._2ZH5Lphj52JvxKM2RKUAdv ._28iHJ95fwwWspxLeI9ID6c._36w5CMW0i5y3aOfbF5e7Ii{background-color:#b41bc6}.gTMSCmOmuAGO07fgXCYyl ._2ZH5Lphj52JvxKM2RKUAdv ._28iHJ95fwwWspxLeI9ID6c._36w5CMW0i5y3aOfbF5e7Ii:hover{background-color:#b421be}.gTMSCmOmuAGO07fgXCYyl ._2ZH5Lphj52JvxKM2RKUAdv ._28iHJ95fwwWspxLeI9ID6c._36w5CMW0i5y3aOfbF5e7Ii:active{background-color:#b429b6}@media(max-width: 1024px){.gTMSCmOmuAGO07fgXCYyl ._2ZH5Lphj52JvxKM2RKUAdv ._28iHJ95fwwWspxLeI9ID6c{margin:10px 0}}@media(max-width: 1024px){.gTMSCmOmuAGO07fgXCYyl ._2ndlClrPs7DxMcn6To9MYk{flex-basis:25%}}.gTMSCmOmuAGO07fgXCYyl ._2ltyqjDgmhFM6ahoMU0obg{padding:0 20px;display:flex;align-items:center;justify-content:center}@media(max-width: 1024px){.gTMSCmOmuAGO07fgXCYyl ._2ltyqjDgmhFM6ahoMU0obg{flex-basis:25%}}.gTMSCmOmuAGO07fgXCYyl ._2ltyqjDgmhFM6ahoMU0obg svg{cursor:pointer}.gTMSCmOmuAGO07fgXCYyl ._2ltyqjDgmhFM6ahoMU0obg svg:hover{opacity:.7}@keyframes AjYB__I4lxARaK2rZaeA_{from{transform:translateY(100%)}to{transform:translateY(0%)}}@keyframes _1gXbEQJLUd8hxFLAADf314{from{transform:translateY(0%)}to{transform:translateY(100%)}}</style><style>@keyframes R6ydgPQLT68SvxD9qP214{0%{opacity:0}100%{opacity:1}}@-moz-keyframes R6ydgPQLT68SvxD9qP214{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes R6ydgPQLT68SvxD9qP214{0%{opacity:0}100%{opacity:1}}@keyframes Hn4nPyGWSw_-qm86jxoCK{0%{left:-76vw}100%{left:0}}@-moz-keyframes Hn4nPyGWSw_-qm86jxoCK{0%{left:-76vw}100%{left:0}}@-webkit-keyframes Hn4nPyGWSw_-qm86jxoCK{0%{left:-76vw}100%{left:0}}._2K0iztnN2PVcCF9x02NOAc{position:fixed;bottom:0;left:0;width:100%;text-align:center;z-index:1000}</style><style>@keyframes WG_yXIRZjNI50hdR2kcWX{0%{opacity:0}100%{opacity:1}}@-moz-keyframes WG_yXIRZjNI50hdR2kcWX{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes WG_yXIRZjNI50hdR2kcWX{0%{opacity:0}100%{opacity:1}}@keyframes _1-Kgi71nl18UPRF_X4hmMs{0%{left:-76vw}100%{left:0}}@-moz-keyframes _1-Kgi71nl18UPRF_X4hmMs{0%{left:-76vw}100%{left:0}}@-webkit-keyframes _1-Kgi71nl18UPRF_X4hmMs{0%{left:-76vw}100%{left:0}}._3ABmHj7cDcj-eycoEvKDFc{position:static;margin:0;padding:0;font-family:"FF Mark W05",Arial,sans-serif}._3ABmHj7cDcj-eycoEvKDFc:lang(ar){font-family:"Cairo",Tahoma,sans-serif}._3ABmHj7cDcj-eycoEvKDFc:lang(ru),._3ABmHj7cDcj-eycoEvKDFc:lang(vi),._3ABmHj7cDcj-eycoEvKDFc:lang(vn),._3ABmHj7cDcj-eycoEvKDFc:lang(el),._3ABmHj7cDcj-eycoEvKDFc:lang(gr),._3ABmHj7cDcj-eycoEvKDFc:lang(th){font-family:"Neue Frutiger World",Tahoma,sans-serif}._3ABmHj7cDcj-eycoEvKDFc:lang(ko),._3ABmHj7cDcj-eycoEvKDFc:lang(kr){font-family:"RixSGo",Tahoma,sans-serif}._3ABmHj7cDcj-eycoEvKDFc ul,._3ABmHj7cDcj-eycoEvKDFc ol{list-style-type:none}._3ABmHj7cDcj-eycoEvKDFc ul,._3ABmHj7cDcj-eycoEvKDFc ol,._3ABmHj7cDcj-eycoEvKDFc li,._3ABmHj7cDcj-eycoEvKDFc p{margin:0;padding:0}._3ABmHj7cDcj-eycoEvKDFc svg{pointer-events:none}._3ABmHj7cDcj-eycoEvKDFc svg._2cz6wqmfPJkRzTPXsiXzhr{display:none}._3ABmHj7cDcj-eycoEvKDFc svg._3ioyJck5QpzNUbWXrsQ2OA{display:block}._3ABmHj7cDcj-eycoEvKDFc svg._1wKFs01XlqNkBnOyRPYvjq{display:inline-block}._3ABmHj7cDcj-eycoEvKDFc svg._2yAP9DZz7HxFSAYy20Cdnr{float:left}._3ABmHj7cDcj-eycoEvKDFc svg._2-K1hidIBPS3bpJU7ykKqz{float:right}._3ABmHj7cDcj-eycoEvKDFc svg use{pointer-events:none}._3ABmHj7cDcj-eycoEvKDFc a{text-decoration:none}._3ABmHj7cDcj-eycoEvKDFc div,._3ABmHj7cDcj-eycoEvKDFc span,._3ABmHj7cDcj-eycoEvKDFc a{box-sizing:border-box}</style><style>@import url(https://lolstatic-a.akamaihd.net/webfonts/live/css/riot/fonts.css);</style><style>@keyframes _3JNQM5CcfHXDa9DnWQrjQo{0%{opacity:0}100%{opacity:1}}@-moz-keyframes _3JNQM5CcfHXDa9DnWQrjQo{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes _3JNQM5CcfHXDa9DnWQrjQo{0%{opacity:0}100%{opacity:1}}@keyframes _1I9qJxny2jhTqOEF2q8xPK{0%{left:-76vw}100%{left:0}}@-moz-keyframes _1I9qJxny2jhTqOEF2q8xPK{0%{left:-76vw}100%{left:0}}@-webkit-keyframes _1I9qJxny2jhTqOEF2q8xPK{0%{left:-76vw}100%{left:0}}body.riotbar-present{margin:80px 0px 0px 0px;overflow-x:hidden;padding:0px;position:static;width:100%}body.riotbar-present-targeted-element{margin-top:0}body.riotbar-application-switcher-open{overflow-y:hidden !important}.riotbar-account-reset h1,.riotbar-account-reset h2,.riotbar-account-reset h3,.riotbar-account-reset h4,.riotbar-account-reset h5,.riotbar-account-reset h6,.riotbar-account-reset img,.riotbar-account-reset ol,.riotbar-account-reset ul,.riotbar-account-reset li,.riotbar-account-reset strong,.riotbar-account-reset em,.riotbar-locale-switcher-reset h1,.riotbar-locale-switcher-reset h2,.riotbar-locale-switcher-reset h3,.riotbar-locale-switcher-reset h4,.riotbar-locale-switcher-reset h5,.riotbar-locale-switcher-reset h6,.riotbar-locale-switcher-reset img,.riotbar-locale-switcher-reset ol,.riotbar-locale-switcher-reset ul,.riotbar-locale-switcher-reset li,.riotbar-locale-switcher-reset strong,.riotbar-locale-switcher-reset em,.riotbar-mobile-nav-reset h1,.riotbar-mobile-nav-reset h2,.riotbar-mobile-nav-reset h3,.riotbar-mobile-nav-reset h4,.riotbar-mobile-nav-reset h5,.riotbar-mobile-nav-reset h6,.riotbar-mobile-nav-reset img,.riotbar-mobile-nav-reset ol,.riotbar-mobile-nav-reset ul,.riotbar-mobile-nav-reset li,.riotbar-mobile-nav-reset strong,.riotbar-mobile-nav-reset em{margin:0;padding:0;border:0;outline:0;font-size:100%;font-family:"FF Mark W05",Arial,sans-serif;vertical-align:baseline;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-font-smoothing:antialiased}.riotbar-account-reset h1:lang(ar),.riotbar-account-reset h2:lang(ar),.riotbar-account-reset h3:lang(ar),.riotbar-account-reset h4:lang(ar),.riotbar-account-reset h5:lang(ar),.riotbar-account-reset h6:lang(ar),.riotbar-account-reset img:lang(ar),.riotbar-account-reset ol:lang(ar),.riotbar-account-reset ul:lang(ar),.riotbar-account-reset li:lang(ar),.riotbar-account-reset strong:lang(ar),.riotbar-account-reset em:lang(ar),.riotbar-locale-switcher-reset h1:lang(ar),.riotbar-locale-switcher-reset h2:lang(ar),.riotbar-locale-switcher-reset h3:lang(ar),.riotbar-locale-switcher-reset h4:lang(ar),.riotbar-locale-switcher-reset h5:lang(ar),.riotbar-locale-switcher-reset h6:lang(ar),.riotbar-locale-switcher-reset img:lang(ar),.riotbar-locale-switcher-reset ol:lang(ar),.riotbar-locale-switcher-reset ul:lang(ar),.riotbar-locale-switcher-reset li:lang(ar),.riotbar-locale-switcher-reset strong:lang(ar),.riotbar-locale-switcher-reset em:lang(ar),.riotbar-mobile-nav-reset h1:lang(ar),.riotbar-mobile-nav-reset h2:lang(ar),.riotbar-mobile-nav-reset h3:lang(ar),.riotbar-mobile-nav-reset h4:lang(ar),.riotbar-mobile-nav-reset h5:lang(ar),.riotbar-mobile-nav-reset h6:lang(ar),.riotbar-mobile-nav-reset img:lang(ar),.riotbar-mobile-nav-reset ol:lang(ar),.riotbar-mobile-nav-reset ul:lang(ar),.riotbar-mobile-nav-reset li:lang(ar),.riotbar-mobile-nav-reset strong:lang(ar),.riotbar-mobile-nav-reset em:lang(ar){font-family:"Cairo",Tahoma,sans-serif}.riotbar-account-reset h1:lang(ru),.riotbar-account-reset h1:lang(vi),.riotbar-account-reset h1:lang(vn),.riotbar-account-reset h1:lang(el),.riotbar-account-reset h1:lang(gr),.riotbar-account-reset h1:lang(th),.riotbar-account-reset h2:lang(ru),.riotbar-account-reset h2:lang(vi),.riotbar-account-reset h2:lang(vn),.riotbar-account-reset h2:lang(el),.riotbar-account-reset h2:lang(gr),.riotbar-account-reset h2:lang(th),.riotbar-account-reset h3:lang(ru),.riotbar-account-reset h3:lang(vi),.riotbar-account-reset h3:lang(vn),.riotbar-account-reset h3:lang(el),.riotbar-account-reset h3:lang(gr),.riotbar-account-reset h3:lang(th),.riotbar-account-reset h4:lang(ru),.riotbar-account-reset h4:lang(vi),.riotbar-account-reset h4:lang(vn),.riotbar-account-reset h4:lang(el),.riotbar-account-reset h4:lang(gr),.riotbar-account-reset h4:lang(th),.riotbar-account-reset h5:lang(ru),.riotbar-account-reset h5:lang(vi),.riotbar-account-reset h5:lang(vn),.riotbar-account-reset h5:lang(el),.riotbar-account-reset h5:lang(gr),.riotbar-account-reset h5:lang(th),.riotbar-account-reset h6:lang(ru),.riotbar-account-reset h6:lang(vi),.riotbar-account-reset h6:lang(vn),.riotbar-account-reset h6:lang(el),.riotbar-account-reset h6:lang(gr),.riotbar-account-reset h6:lang(th),.riotbar-account-reset img:lang(ru),.riotbar-account-reset img:lang(vi),.riotbar-account-reset img:lang(vn),.riotbar-account-reset img:lang(el),.riotbar-account-reset img:lang(gr),.riotbar-account-reset img:lang(th),.riotbar-account-reset ol:lang(ru),.riotbar-account-reset ol:lang(vi),.riotbar-account-reset ol:lang(vn),.riotbar-account-reset ol:lang(el),.riotbar-account-reset ol:lang(gr),.riotbar-account-reset ol:lang(th),.riotbar-account-reset ul:lang(ru),.riotbar-account-reset ul:lang(vi),.riotbar-account-reset ul:lang(vn),.riotbar-account-reset ul:lang(el),.riotbar-account-reset ul:lang(gr),.riotbar-account-reset ul:lang(th),.riotbar-account-reset li:lang(ru),.riotbar-account-reset li:lang(vi),.riotbar-account-reset li:lang(vn),.riotbar-account-reset li:lang(el),.riotbar-account-reset li:lang(gr),.riotbar-account-reset li:lang(th),.riotbar-account-reset strong:lang(ru),.riotbar-account-reset strong:lang(vi),.riotbar-account-reset strong:lang(vn),.riotbar-account-reset strong:lang(el),.riotbar-account-reset strong:lang(gr),.riotbar-account-reset strong:lang(th),.riotbar-account-reset em:lang(ru),.riotbar-account-reset em:lang(vi),.riotbar-account-reset em:lang(vn),.riotbar-account-reset em:lang(el),.riotbar-account-reset em:lang(gr),.riotbar-account-reset em:lang(th),.riotbar-locale-switcher-reset h1:lang(ru),.riotbar-locale-switcher-reset h1:lang(vi),.riotbar-locale-switcher-reset h1:lang(vn),.riotbar-locale-switcher-reset h1:lang(el),.riotbar-locale-switcher-reset h1:lang(gr),.riotbar-locale-switcher-reset h1:lang(th),.riotbar-locale-switcher-reset h2:lang(ru),.riotbar-locale-switcher-reset h2:lang(vi),.riotbar-locale-switcher-reset h2:lang(vn),.riotbar-locale-switcher-reset h2:lang(el),.riotbar-locale-switcher-reset h2:lang(gr),.riotbar-locale-switcher-reset h2:lang(th),.riotbar-locale-switcher-reset h3:lang(ru),.riotbar-locale-switcher-reset h3:lang(vi),.riotbar-locale-switcher-reset h3:lang(vn),.riotbar-locale-switcher-reset h3:lang(el),.riotbar-locale-switcher-reset h3:lang(gr),.riotbar-locale-switcher-reset h3:lang(th),.riotbar-locale-switcher-reset h4:lang(ru),.riotbar-locale-switcher-reset h4:lang(vi),.riotbar-locale-switcher-reset h4:lang(vn),.riotbar-locale-switcher-reset h4:lang(el),.riotbar-locale-switcher-reset h4:lang(gr),.riotbar-locale-switcher-reset h4:lang(th),.riotbar-locale-switcher-reset h5:lang(ru),.riotbar-locale-switcher-reset h5:lang(vi),.riotbar-locale-switcher-reset h5:lang(vn),.riotbar-locale-switcher-reset h5:lang(el),.riotbar-locale-switcher-reset h5:lang(gr),.riotbar-locale-switcher-reset h5:lang(th),.riotbar-locale-switcher-reset h6:lang(ru),.riotbar-locale-switcher-reset h6:lang(vi),.riotbar-locale-switcher-reset h6:lang(vn),.riotbar-locale-switcher-reset h6:lang(el),.riotbar-locale-switcher-reset h6:lang(gr),.riotbar-locale-switcher-reset h6:lang(th),.riotbar-locale-switcher-reset img:lang(ru),.riotbar-locale-switcher-reset img:lang(vi),.riotbar-locale-switcher-reset img:lang(vn),.riotbar-locale-switcher-reset img:lang(el),.riotbar-locale-switcher-reset img:lang(gr),.riotbar-locale-switcher-reset img:lang(th),.riotbar-locale-switcher-reset ol:lang(ru),.riotbar-locale-switcher-reset ol:lang(vi),.riotbar-locale-switcher-reset ol:lang(vn),.riotbar-locale-switcher-reset ol:lang(el),.riotbar-locale-switcher-reset ol:lang(gr),.riotbar-locale-switcher-reset ol:lang(th),.riotbar-locale-switcher-reset ul:lang(ru),.riotbar-locale-switcher-reset ul:lang(vi),.riotbar-locale-switcher-reset ul:lang(vn),.riotbar-locale-switcher-reset ul:lang(el),.riotbar-locale-switcher-reset ul:lang(gr),.riotbar-locale-switcher-reset ul:lang(th),.riotbar-locale-switcher-reset li:lang(ru),.riotbar-locale-switcher-reset li:lang(vi),.riotbar-locale-switcher-reset li:lang(vn),.riotbar-locale-switcher-reset li:lang(el),.riotbar-locale-switcher-reset li:lang(gr),.riotbar-locale-switcher-reset li:lang(th),.riotbar-locale-switcher-reset strong:lang(ru),.riotbar-locale-switcher-reset strong:lang(vi),.riotbar-locale-switcher-reset strong:lang(vn),.riotbar-locale-switcher-reset strong:lang(el),.riotbar-locale-switcher-reset strong:lang(gr),.riotbar-locale-switcher-reset strong:lang(th),.riotbar-locale-switcher-reset em:lang(ru),.riotbar-locale-switcher-reset em:lang(vi),.riotbar-locale-switcher-reset em:lang(vn),.riotbar-locale-switcher-reset em:lang(el),.riotbar-locale-switcher-reset em:lang(gr),.riotbar-locale-switcher-reset em:lang(th),.riotbar-mobile-nav-reset h1:lang(ru),.riotbar-mobile-nav-reset h1:lang(vi),.riotbar-mobile-nav-reset h1:lang(vn),.riotbar-mobile-nav-reset h1:lang(el),.riotbar-mobile-nav-reset h1:lang(gr),.riotbar-mobile-nav-reset h1:lang(th),.riotbar-mobile-nav-reset h2:lang(ru),.riotbar-mobile-nav-reset h2:lang(vi),.riotbar-mobile-nav-reset h2:lang(vn),.riotbar-mobile-nav-reset h2:lang(el),.riotbar-mobile-nav-reset h2:lang(gr),.riotbar-mobile-nav-reset h2:lang(th),.riotbar-mobile-nav-reset h3:lang(ru),.riotbar-mobile-nav-reset h3:lang(vi),.riotbar-mobile-nav-reset h3:lang(vn),.riotbar-mobile-nav-reset h3:lang(el),.riotbar-mobile-nav-reset h3:lang(gr),.riotbar-mobile-nav-reset h3:lang(th),.riotbar-mobile-nav-reset h4:lang(ru),.riotbar-mobile-nav-reset h4:lang(vi),.riotbar-mobile-nav-reset h4:lang(vn),.riotbar-mobile-nav-reset h4:lang(el),.riotbar-mobile-nav-reset h4:lang(gr),.riotbar-mobile-nav-reset h4:lang(th),.riotbar-mobile-nav-reset h5:lang(ru),.riotbar-mobile-nav-reset h5:lang(vi),.riotbar-mobile-nav-reset h5:lang(vn),.riotbar-mobile-nav-reset h5:lang(el),.riotbar-mobile-nav-reset h5:lang(gr),.riotbar-mobile-nav-reset h5:lang(th),.riotbar-mobile-nav-reset h6:lang(ru),.riotbar-mobile-nav-reset h6:lang(vi),.riotbar-mobile-nav-reset h6:lang(vn),.riotbar-mobile-nav-reset h6:lang(el),.riotbar-mobile-nav-reset h6:lang(gr),.riotbar-mobile-nav-reset h6:lang(th),.riotbar-mobile-nav-reset img:lang(ru),.riotbar-mobile-nav-reset img:lang(vi),.riotbar-mobile-nav-reset img:lang(vn),.riotbar-mobile-nav-reset img:lang(el),.riotbar-mobile-nav-reset img:lang(gr),.riotbar-mobile-nav-reset img:lang(th),.riotbar-mobile-nav-reset ol:lang(ru),.riotbar-mobile-nav-reset ol:lang(vi),.riotbar-mobile-nav-reset ol:lang(vn),.riotbar-mobile-nav-reset ol:lang(el),.riotbar-mobile-nav-reset ol:lang(gr),.riotbar-mobile-nav-reset ol:lang(th),.riotbar-mobile-nav-reset ul:lang(ru),.riotbar-mobile-nav-reset ul:lang(vi),.riotbar-mobile-nav-reset ul:lang(vn),.riotbar-mobile-nav-reset ul:lang(el),.riotbar-mobile-nav-reset ul:lang(gr),.riotbar-mobile-nav-reset ul:lang(th),.riotbar-mobile-nav-reset li:lang(ru),.riotbar-mobile-nav-reset li:lang(vi),.riotbar-mobile-nav-reset li:lang(vn),.riotbar-mobile-nav-reset li:lang(el),.riotbar-mobile-nav-reset li:lang(gr),.riotbar-mobile-nav-reset li:lang(th),.riotbar-mobile-nav-reset strong:lang(ru),.riotbar-mobile-nav-reset strong:lang(vi),.riotbar-mobile-nav-reset strong:lang(vn),.riotbar-mobile-nav-reset strong:lang(el),.riotbar-mobile-nav-reset strong:lang(gr),.riotbar-mobile-nav-reset strong:lang(th),.riotbar-mobile-nav-reset em:lang(ru),.riotbar-mobile-nav-reset em:lang(vi),.riotbar-mobile-nav-reset em:lang(vn),.riotbar-mobile-nav-reset em:lang(el),.riotbar-mobile-nav-reset em:lang(gr),.riotbar-mobile-nav-reset em:lang(th){font-family:"Neue Frutiger World",Tahoma,sans-serif}.riotbar-account-reset h1:lang(ko),.riotbar-account-reset h1:lang(kr),.riotbar-account-reset h2:lang(ko),.riotbar-account-reset h2:lang(kr),.riotbar-account-reset h3:lang(ko),.riotbar-account-reset h3:lang(kr),.riotbar-account-reset h4:lang(ko),.riotbar-account-reset h4:lang(kr),.riotbar-account-reset h5:lang(ko),.riotbar-account-reset h5:lang(kr),.riotbar-account-reset h6:lang(ko),.riotbar-account-reset h6:lang(kr),.riotbar-account-reset img:lang(ko),.riotbar-account-reset img:lang(kr),.riotbar-account-reset ol:lang(ko),.riotbar-account-reset ol:lang(kr),.riotbar-account-reset ul:lang(ko),.riotbar-account-reset ul:lang(kr),.riotbar-account-reset li:lang(ko),.riotbar-account-reset li:lang(kr),.riotbar-account-reset strong:lang(ko),.riotbar-account-reset strong:lang(kr),.riotbar-account-reset em:lang(ko),.riotbar-account-reset em:lang(kr),.riotbar-locale-switcher-reset h1:lang(ko),.riotbar-locale-switcher-reset h1:lang(kr),.riotbar-locale-switcher-reset h2:lang(ko),.riotbar-locale-switcher-reset h2:lang(kr),.riotbar-locale-switcher-reset h3:lang(ko),.riotbar-locale-switcher-reset h3:lang(kr),.riotbar-locale-switcher-reset h4:lang(ko),.riotbar-locale-switcher-reset h4:lang(kr),.riotbar-locale-switcher-reset h5:lang(ko),.riotbar-locale-switcher-reset h5:lang(kr),.riotbar-locale-switcher-reset h6:lang(ko),.riotbar-locale-switcher-reset h6:lang(kr),.riotbar-locale-switcher-reset img:lang(ko),.riotbar-locale-switcher-reset img:lang(kr),.riotbar-locale-switcher-reset ol:lang(ko),.riotbar-locale-switcher-reset ol:lang(kr),.riotbar-locale-switcher-reset ul:lang(ko),.riotbar-locale-switcher-reset ul:lang(kr),.riotbar-locale-switcher-reset li:lang(ko),.riotbar-locale-switcher-reset li:lang(kr),.riotbar-locale-switcher-reset strong:lang(ko),.riotbar-locale-switcher-reset strong:lang(kr),.riotbar-locale-switcher-reset em:lang(ko),.riotbar-locale-switcher-reset em:lang(kr),.riotbar-mobile-nav-reset h1:lang(ko),.riotbar-mobile-nav-reset h1:lang(kr),.riotbar-mobile-nav-reset h2:lang(ko),.riotbar-mobile-nav-reset h2:lang(kr),.riotbar-mobile-nav-reset h3:lang(ko),.riotbar-mobile-nav-reset h3:lang(kr),.riotbar-mobile-nav-reset h4:lang(ko),.riotbar-mobile-nav-reset h4:lang(kr),.riotbar-mobile-nav-reset h5:lang(ko),.riotbar-mobile-nav-reset h5:lang(kr),.riotbar-mobile-nav-reset h6:lang(ko),.riotbar-mobile-nav-reset h6:lang(kr),.riotbar-mobile-nav-reset img:lang(ko),.riotbar-mobile-nav-reset img:lang(kr),.riotbar-mobile-nav-reset ol:lang(ko),.riotbar-mobile-nav-reset ol:lang(kr),.riotbar-mobile-nav-reset ul:lang(ko),.riotbar-mobile-nav-reset ul:lang(kr),.riotbar-mobile-nav-reset li:lang(ko),.riotbar-mobile-nav-reset li:lang(kr),.riotbar-mobile-nav-reset strong:lang(ko),.riotbar-mobile-nav-reset strong:lang(kr),.riotbar-mobile-nav-reset em:lang(ko),.riotbar-mobile-nav-reset em:lang(kr){font-family:"RixSGo",Tahoma,sans-serif}.riotbar-account-reset ol,.riotbar-account-reset ul,.riotbar-locale-switcher-reset ol,.riotbar-locale-switcher-reset ul,.riotbar-mobile-nav-reset ol,.riotbar-mobile-nav-reset ul{list-style:none}.riotbar-account-reset a,.riotbar-locale-switcher-reset a,.riotbar-mobile-nav-reset a{text-decoration:none;color:#f9f9f9}.osano-cm-view--type_consent .osano-cm-list-item:nth-child(5){display:none}</style><script id="rso-xsso-script-embed" src="./theredteam_files/xsso"></script><style type="text/css">
+          body.riotbar-present .osano-cm-widget {
+            display: none;
+          }
+        </style><script type="text/javascript" src="./theredteam_files/singular-sdk.js.download"></script><script async="" src="./theredteam_files/modules.e4b2dc39f985f11fb1e4.js.download" charset="utf-8"></script></head><body class="en-us en  desktop riotbar-present-targeted-element riotbar-presentriotbar-root riotbar-present-targeted-element riotbar-presentriotbar-root riotbar-present-targeted-element riotbar-present"><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KV3FPXF" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="_2WHHmyrJNsleSPqyK5918a riotbar-footer" data-testid="riotbar:footer"><div class="_3AYbzClUxsU2maVqIee5X riotbar-footer-content " data-testid="riotbar:footer:content"><div class="_3tOmEyMTDQ_ETh9CuxsqLK riotbar-social-links"><ul><li><a class=" _3YN2W34Ia8MMkttsKrAc5g link-facebook link-social" href="#" target="_blank" data-testid="riotbar:footer:social-facebook"><svg class="" viewBox="0 0 15 15"><title>facebook</title><path d="M15 7.54A7.5 7.5 0 106.33 15V9.73h-1.9V7.54h1.9V5.91a2.65 2.65 0 012.83-3 12.09 12.09 0 011.68.14v1.86H9.9a1.09 1.09 0 00-1.23 1.18V7.5h2.08l-.33 2.19H8.67v5.27A7.54 7.54 0 0015 7.54z"></path></svg><span class="qYdzzVvsALoZ6Jcs-tLLk image-alt-text"></span></a></li><li><a class=" _3YN2W34Ia8MMkttsKrAc5g link-youtube link-social" href="#" target="_blank" data-testid="riotbar:footer:social-youtube"><svg class="" viewBox="0 0 16.67 11.67"><title>youtube</title><path d="M14.85.36a2.08 2.08 0 011.47 1.47 20.5 20.5 0 01.34 4 22.19 22.19 0 01-.34 4 2.1 2.1 0 01-1.47 1.47 51.13 51.13 0 01-6.52.34 48.46 48.46 0 01-6.52-.36A2.07 2.07 0 01.34 9.82a23.82 23.82 0 010-8A2.11 2.11 0 011.81.34a49.68 49.68 0 016.52-.35 48.31 48.31 0 016.52.37zm-3.84 5.48l-4.34 2.5v-5z"></path></svg><span class="qYdzzVvsALoZ6Jcs-tLLk image-alt-text"></span></a></li></ul></div> <div class="copyright">
+        
+    </div>
+    <style>
+     .copyright {
+    position: absolute;
+    bottom: 15px; /* Điều chỉnh khoảng cách từ dưới lên (ở đây là 20px, bạn có thể thay đổi) */
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+    width: 100%;
+    display: flex; /* Sử dụng Flexbox */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    z-index: 1; /* Đảm bảo hiển thị trên các phần khác */
+}   
+
+._3AYbzClUxsU2maVqIee5X {
+    margin-bottom: -50px;
+}
+    </style>
+
+    <div class="_2MQBVXoMNHaA5jCv6-rKyc riotbar-copyright "><p data-testid="riotbar:footer:copyright:text" class="sqwC2nnXdkGzh_DTJl_2O riotbar-footer-copyright-text ">© Since: 2021-2024 The Red Team</p><div data-testid="riotbar:footer:copyright:messages" class="markup"><br>Nhóm Việt Hóa Game Việt Nam | Liên hệ: <a href="/cdn-cgi/l/email-protection#ecbe8988818988858dded9dcd4ac8b818d8580c28f8381"><span class="__cf_email__" data-cfemail="7b291e1f161e1f121a494e4b433b1c161a121755181416">[email&#160;protected]</span></a></div></div><div class="_2Ojj9KgtyZTHH-I2MkvQqi riotbar-legal-links"><ul><li> <a class="" href="#" target="_blank" data-testid="riotbar:footer:legal:link-Privacy">FANPAGE The Red Team</a></li><li><a class="" href="#" target="_blank" data-testid="riotbar:footer:legal:link-Terms Of Use">discord the red team</a></li><li><a class="" href="#" target="_blank" data-testid="riotbar:footer:legal:link-privacy-vng">forum the red team</a></li><li></li></ul></div></div></div><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></div></div></div></body></html>	
+</div>
+    <!--End pagewrapper-->
+    <script src="js/jquery.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/jquery.fancybox.js"></script>
+    <script src="js/owl.js"></script>
+    <script src="js/appear.js"></script>
+    <script src="js/wow.js"></script>
+    <script src="js/scrollbar.js"></script>
+    <script src="js/script.js"></script>
+    <div class="echbay-sms-messenger style-for-position-br">
+	<div class="phonering-alo-messenger">
+		<a href="#" target="_blank" rel="nofollow" class="echbay-phonering-messenger-event">.</a>
+	</div>  
+</div>
+<style>
+  
+.echbay-sms-messenger div.phonering-alo-messenger {
+	background-color:#e60f1e
+}
+ 
+.echbay-sms-messenger {
+	width:45px
+}
+.echbay-sms-messenger a {
+	line-height:45px;
+        color: transparent;
+display:block;
+}
+.echbay-sms-messenger {
+	display:block
+}
+
+.echbay-sms-messenger div.phonering-alo-zalo {
+    background-image: url(https://taphoammo.vn/wp-content/uploads/2023/01/zalo.png);
+}
+.echbay-sms-messenger div.phonering-alo-messenger {
+    background-image: url(https://theredteam.vn/images/messenger.png);
+    background-color: #e60f1e;
+}
+.echbay-sms-messenger div {
+    margin: 14px 0;
+    background: #0084FF center no-repeat;
+    background-size: 70%;
+    border-radius: 50%;
+    box-shadow: 0 3px 10px #888;
+}
+ 
+.echbay-sms-messenger {
+    text-align: center;
+    right:20px;
+    position: fixed;
+    bottom: 20px;
+    z-index: 999;
+}
+
+.fb-comments, .fb-comments span, .fb-comments iframe {
+          background-color: white !important;
+        }
+
+        .fb-comments {
+          width: 100%;
+          color: white !important;
+        }
+        
+        #content2 {
+          font-family: "Segoe UI"; 
+          border-collapse: collapse;
+          width: 100%;
+          table-layout: fixed;
+          font-size: 20px;
+          margin-top: 20px;
+          
+        }
+        
+        #content2 td, #content2 th {
+          border: 1px solid #B42607;
+          padding: 25px;
+          color: white;
+          
+          
+        }
+        #content2 tr:nth-child(even){background-color: #ffffff;}
+        
+        #content2 th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          text-align: left;
+          background-color: #B42607;
+          color: white;
+        }
+</style>
+</body>
+</html>

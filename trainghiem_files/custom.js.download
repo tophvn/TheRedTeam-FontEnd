@@ -1,0 +1,514 @@
+/*--------------------- Copyright (c) 2021 -----------------------
+[Master Javascript]
+-------------------------------------------------------------------*/
+(function($) {
+    "use strict";
+    var game = {
+        initialised: false,
+        version: 1.0,
+        mobile: false,
+        init: function() {
+            if (!this.initialised) {
+                this.initialised = true;
+            } else {
+                return;
+            }
+            /*-------------- Design Functions Calling ---------------------------------------------------
+            ------------------------------------------------------------------------------------------------*/
+            this.gzloader();
+            this.gztoggle();
+            this.gzstickyheader();
+            this.gzbannerslider();
+            this.gzAboutSlider();
+            this.gzLatestGame();
+            this.gzGameTrailer();
+            this.gzproductSlider();
+            this.gzbottom_top();
+            this.MailFunction();
+            this.cart_box();
+            this.quantity();
+            this.product_remove();
+        },
+
+        /*-------------- Design Functions Calling ---------------------------------------------------
+        --------------------------------------------------------------------------------------------------*/
+
+        // loader           
+        gzloader: function() {
+            jQuery(window).on('load', function() {
+                $(".gz-loader").fadeOut();
+                $(".gz-spinner").delay(500).fadeOut("slow");
+            });
+        },
+        // loader
+
+        //Toggle
+        gztoggle: function() {
+            $(".gz-toggle-btn").on('click', function(e) {
+                e.stopPropagation();
+                $("body").toggleClass("menu-open");
+            });
+        },
+
+        //sticky header
+        gzstickyheader: function() {
+            $(window).scroll(function() {
+                var wh = window.innerWidth;
+                if (wh > 767) {
+                    var h = window.innerHeight;
+                    var window_top = $(window).scrollTop() + 1;
+                    if (window_top > 100) {
+                        $('.gz-header-main').addClass('gz-header-fixed');
+                    } else {
+                        $('.gz-header-main').removeClass('gz-header-fixed');
+                    }
+                }
+            });
+        },
+
+        // banner slider
+        gzbannerslider: function() {
+            var swiper = new Swiper(".gz-banner-slider", {
+                slidesPerView: 3,
+                spaceBetween: 50,
+                direction: 'horizontal',
+                initialSlide: 0,
+                centeredSlides: true,
+                autoplay: true,
+                loop: true,
+                watchSlidesVisibility: true,
+
+                navigation: {
+                    nextEl: ".gz-banner-main .swiper-button-next",
+                    prevEl: ".gz-banner-main .swiper-button-prev",
+                },
+                breakpoints: {
+                    0: {
+                        slidesPerView: 1,
+                        spaceBetween: 0,
+                    },
+                    575: {
+                        slidesPerView: 1,
+                        spaceBetween: 10,
+                    },
+                    767: {
+                        slidesPerView: 2,
+                        spaceBetween: 20,
+                    },
+                    992: {
+                        slidesPerView: 2,
+                        spaceBetween: 20,
+                    },
+                    1200: {
+                        slidesPerView: 3,
+                        spaceBetween: 30,
+                    },
+                },
+
+            });
+
+
+        },
+        // About  slider
+        gzAboutSlider: function() {
+            var swiper = new Swiper(".AboutSlider", {
+                slidesPerView: 1,
+                spaceBetween: 30,
+                autoplay: true,
+                direction: 'horizontal',
+                initialSlide: 0,
+                loop: true,
+                watchSlidesVisibility: true,
+
+                navigation: {
+                    nextEl: ".gz-about-slider-main .swiper-button-next",
+                    prevEl: ".gz-about-slider-main .swiper-button-prev",
+                },
+
+            });
+
+        },
+        // Latest game
+        gzLatestGame: function() {
+            var swiper = new Swiper(".LatestGame", {
+                slidesPerView: 7,
+                spaceBetween: 18,
+                speed: 700,
+                autoplay: true,
+                parallax: false,
+                navigation: {
+                    nextEl: ".gz-game-slider-inner .swiper-button-next",
+                    prevEl: ".gz-game-slider-inner .swiper-button-prev",
+                },
+                breakpoints: {
+                    0: {
+                        slidesPerView: 1,
+                        spaceBetween: 0,
+                    },
+                    480: {
+                        slidesPerView: 2,
+                        spaceBetween: 30,
+                    },
+                    575: {
+                        slidesPerView: 3,
+                        spaceBetween: 30,
+                    },
+                    767: {
+                        slidesPerView: 4,
+                        spaceBetween: 30,
+                    },
+                    992: {
+                        slidesPerView: 4,
+                        spaceBetween: 30,
+                    },
+                    1200: {
+                        slidesPerView: 7,
+                        spaceBetween: 30,
+                    },
+                },
+            });
+        },
+
+
+        // game Trailer game
+        gzGameTrailer: function() {
+            var autoSwap = setInterval(swap, 3500);
+
+            $("ul, span").hover(
+                function() {
+                    clearInterval(autoSwap);
+                },
+
+            );
+
+            var items = [];
+            var startItem = 1;
+            var position = 0;
+            var itemCount = $(".carousel li.items").length;
+            var leftpos = itemCount;
+            var resetCount = itemCount;
+
+            $("li.items").each(function(index) {
+                items[index] = $(this).text();
+            });
+
+            function swap(action) {
+                var direction = action;
+
+                if (direction == "counter-clockwise") {
+                    var leftitem = $(".left-pos").attr("id") - 1;
+                    if (leftitem == 0) {
+                        leftitem = itemCount;
+                    }
+
+                    $(".right-pos").removeClass("right-pos").addClass("back-pos");
+                    $(".main-pos").removeClass("main-pos").addClass("right-pos");
+                    $(".left-pos").removeClass("left-pos").addClass("main-pos");
+                    $("#" + leftitem + "")
+                        .removeClass("back-pos")
+                        .addClass("left-pos");
+
+                    startItem--;
+                    if (startItem < 1) {
+                        startItem = itemCount;
+                    }
+                }
+
+                if (direction == "clockwise" || direction == "" || direction == null) {
+                    function pos(positionvalue) {
+                        if (positionvalue != "leftposition") {
+                            position++;
+
+                            if (startItem + position > resetCount) {
+                                position = 1 - startItem;
+                            }
+                        }
+
+                        if (positionvalue == "leftposition") {
+                            position = startItem - 1;
+
+                            if (position < 1) {
+                                position = itemCount;
+                            }
+                        }
+
+                        return position;
+                    }
+
+                    $("#" + startItem + "")
+                        .removeClass("main-pos")
+                        .addClass("left-pos");
+                    $("#" + (startItem + pos()) + "")
+                        .removeClass("right-pos")
+                        .addClass("main-pos");
+                    $("#" + (startItem + pos()) + "")
+                        .removeClass("back-pos")
+                        .addClass("right-pos");
+                    $("#" + pos("leftposition") + "")
+                        .removeClass("left-pos")
+                        .addClass("back-pos");
+
+                    startItem++;
+                    position = 0;
+                    if (startItem > itemCount) {
+                        startItem = 1;
+                    }
+                }
+            }
+
+            $("#next").click(function() {
+                swap("clockwise");
+            });
+
+            $("#prev").click(function() {
+                swap("counter-clockwise");
+            });
+
+            $(".gz-trailor-section ul li").click(function() {
+                if ($(this).attr("class") == ".gz-trailor-section ul li items left-pos") {
+                    swap("counter-clockwise");
+                } else {
+                    swap("clockwise");
+                }
+            });
+
+        },
+        // product slider
+        gzproductSlider: function() {
+            var swiper = new Swiper(".productSlider", {
+                slidesPerView: 4,
+                spaceBetween: 18,
+                speed: 700,
+                autoplay: true,
+                loop: true,
+                parallax: false,
+                autoplay: {
+                    delay: 2000,
+                },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+                breakpoints: {
+                    0: {
+                        slidesPerView: 1,
+                        spaceBetween: 0,
+                    },
+                    480: {
+                        slidesPerView: 2,
+                        spaceBetween: 30,
+                    },
+                    575: {
+                        slidesPerView: 2,
+                        spaceBetween: 30,
+                    },
+                    767: {
+                        slidesPerView: 3,
+                        spaceBetween: 30,
+                    },
+                    992: {
+                        slidesPerView: 4,
+                        spaceBetween: 30,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                        spaceBetween: 30,
+                    },
+                },
+            });
+        },
+        // bottom to top
+        gzbottom_top: function() {
+            if ($('#button').length > 0) {
+
+                var btn = $('#button');
+
+                $(window).scroll(function() {
+                    if ($(window).scrollTop() > 300) {
+                        btn.addClass('show');
+                    } else {
+                        btn.removeClass('show');
+                    }
+                });
+
+                btn.on('click', function(e) {
+                    e.preventDefault();
+                    $('html, body').animate({
+                        scrollTop: 0
+                    }, '300');
+                });
+
+
+            }
+        },
+        // Bottom To Top
+        MailFunction: function() {
+	
+			
+			
+			function submitForm(){
+				// Initiate Variables With Form Content
+				var name = $("#name").val();
+				var email = $("#email").val();
+				var number = $("#number").val();
+				var subject = $("#subject").val();
+				var message = $("#message").val();
+			
+				$.ajax({
+					type: "POST",
+					url: "contactmail.php",
+					data: "name=" + name + "&email=" + email + "&number=" + number + "&subject=" +  subject +"&message=" + message,
+					success : function(text){
+						if (text == "success"){
+							formSuccess();
+						} else {
+							formError();
+							submitMSG(false,text);   
+						}
+					}
+				});
+			}
+			
+			function formSuccess(){
+				$("#contactForm")[0].reset();
+				submitMSG(true, "Message Submitted!")
+			}
+			
+			function formSuccess(){
+				$("#contactForm")[0].reset();
+				submitMSG(true, "Message Submitted!")
+			}
+			
+			function formError(){
+				$("#contactForm").removeClass().addClass('animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+					$(this).removeClass();
+				});
+			}
+			
+			function submitMSG(valid, msg){
+				if(valid){
+					var msgClasses = "h3 text-center tada animated text-success";
+				} else {
+					var msgClasses = "h3 text-center text-danger";
+				}
+				$("#msgSubmit").removeClass().addClass(msgClasses).text(msg);
+			}
+					},
+            cart_box: function () {
+                $('.cmn-cart-tgl').on("click", function (e) {
+                    e.stopPropagation();
+                    $('body').toggleClass('open-cart');
+                });
+                $('.close-box').on("click", function () {
+                    $('body').removeClass('open-cart');
+                });
+                $(".sb-cartbox").on('click', function (e) {
+                    e.stopPropagation();
+                });
+                $(document).on("click",function() {
+                    $('body').removeClass('open-cart');
+                });
+            },
+            quantity:function(){
+                var quantity=0;
+				$('.quantity-plus').on('click', function(e){
+					e.preventDefault();
+					var quantity = Number($(this).siblings('.quantity').val());
+					$(this).siblings('.quantity').val(quantity + 1);            
+
+				});
+				$('.quantity-minus').on('click', function(e){
+					e.preventDefault();
+					var quantity = Number($(this).siblings('.quantity').val());
+					if(quantity>0){
+						$(this).siblings('.quantity').val(quantity - 1);
+					}
+				});	
+            },
+            product_remove:function(){
+                if($('.gz-remove-product').length > 0){
+					$(document).on('click', '.gz-remove-product', function () {
+						$(this).parents('tr').remove();
+					});
+				}
+            },
+    };
+    game.init();
+    
+    /*-----------------------------------------------------
+	Fix Contact Form Submission
+-----------------------------------------------------*/
+// Contact Form Submission
+function checkRequire(formId , targetResp){
+    targetResp.html('');
+    var email = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+    var url = /(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/;
+    var image = /\.(jpe?g|gif|png|PNG|JPE?G)$/;
+    var mobile = /^[\s()+-]*([0-9][\s()+-]*){6,20}$/;
+    var facebook = /^(https?:\/\/)?(www\.)?facebook.com\/[a-zA-Z0-9(\.\?)?]/;
+    var twitter = /^(https?:\/\/)?(www\.)?twitter.com\/[a-zA-Z0-9(\.\?)?]/;
+    var google_plus = /^(https?:\/\/)?(www\.)?plus.google.com\/[a-zA-Z0-9(\.\?)?]/;
+    var check = 0;
+    $('#er_msg').remove();
+    var target = (typeof formId == 'object')? $(formId):$('#'+formId);
+    target.find('input , textarea , select').each(function(){
+        if($(this).hasClass('require')){
+            if($(this).val().trim() == ''){
+                check = 1;
+                $(this).focus();
+                $(this).parent('div').addClass('form_error');
+                targetResp.html('You missed out some fields.');
+                $(this).addClass('error');
+                return false;
+            }else{
+                $(this).removeClass('error');
+                $(this).parent('div').removeClass('form_error');
+            }
+        }
+        if($(this).val().trim() != ''){
+            var valid = $(this).attr('data-valid');
+            if(typeof valid != 'undefined'){
+                if(!eval(valid).test($(this).val().trim())){
+                    $(this).addClass('error');
+                    $(this).focus();
+                    check = 1;
+                    targetResp.html($(this).attr('data-error'));
+                    return false;
+                }else{
+                    $(this).removeClass('error');
+                }
+            }
+        }
+    });
+    return check;
+}
+$(".submitForm").on('click', function() {
+    var _this = $(this);
+    var targetForm = _this.closest('form');
+    var errroTarget = targetForm.find('.response');
+    var check = checkRequire(targetForm , errroTarget);
+    
+    if(check == 0){
+       var formDetail = new FormData(targetForm[0]);
+        formDetail.append('form_type' , _this.attr('form-type'));
+        $.ajax({
+            method : 'post',
+            url : 'ajaxmail.php',
+            data:formDetail,
+            cache:false,
+            contentType: false,
+            processData: false
+        }).done(function(resp){
+            console.log(resp);
+            if(resp == 1){
+                targetForm.find('input').val('');
+                targetForm.find('textarea').val('');
+                errroTarget.html('<p style="color:green;">Mail has been sent successfully.</p>');
+            }else{
+                errroTarget.html('<p style="color:red;">Something went wrong please try again latter.</p>');
+            }
+        });
+    }
+});
+
+}(jQuery));
